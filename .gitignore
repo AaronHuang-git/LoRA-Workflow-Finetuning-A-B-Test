@@ -1,0 +1,19 @@
+# Secrets — never commit
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Generated artefacts kept out of git history until publish-ready
+dataset/dax_explanations.raw.jsonl
+*.log
+
+# Scratch curation batches
+_edits*.json
+
+# Internal curriculum — not part of the published deliverable
+lesson_plan.md
+lesson_plan.pdf

@@ -1,0 +1,11 @@
+# Night 1 — dataset distillation (runs locally, CPU-only)
+anthropic>=0.40
+python-dotenv>=1.0
+
+# Night 1 — push dataset to HF Hub (install when we reach the push step)
+# datasets>=2.19
+# huggingface_hub>=0.23
+
+# Night 2 — training runs on Modal's cloud GPU, deps declared in train.py's image,
+# NOT installed locally. Listed here for reference only:
+#   modal, torch, transformers, peft, trl, bitsandbytes, accelerate
