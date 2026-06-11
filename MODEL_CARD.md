@@ -24,7 +24,7 @@ measure computes, how it computes it, and one practical watch-out.
 
 - **Adapter** (this repo): rank-16 LoRA, ~168 MB. Load on top of the base model.
 - **Dataset:** [`AaronHuang160/dax-explanations`](https://huggingface.co/datasets/AaronHuang160/dax-explanations)
-- **Code / reproducibility:** see the linked GitHub repo (`modal run train.py`).
+- **Code / reproducibility:** [github.com/AaronHuang-git/LoRA-Workflow-Finetuning-A-B-Test](https://github.com/AaronHuang-git/LoRA-Workflow-Finetuning-A-B-Test) (`modal run train.py`).
 
 ## What it does
 
