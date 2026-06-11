@@ -1,0 +1,30 @@
+{"id": "agg-01", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Sales = SUM ( Sales[SalesAmount] )"}
+{"id": "agg-02", "category": "simple_aggregation", "difficulty": "easy", "dax": "Order Count = DISTINCTCOUNT ( Sales[OrderNumber] )"}
+{"id": "agg-03", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Quantity = SUM ( Sales[Quantity] )"}
+{"id": "agg-04", "category": "simple_aggregation", "difficulty": "easy", "dax": "Active Customers = DISTINCTCOUNT ( Sales[CustomerKey] )"}
+{"id": "agg-05", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Unit Price = AVERAGE ( Sales[UnitPrice] )"}
+{"id": "time-01", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales YTD = TOTALYTD ( [Total Sales], 'Date'[Date] )"}
+{"id": "time-02", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales PY = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-03", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales YoY % = DIVIDE ( [Total Sales] - [Sales PY], [Sales PY] )"}
+{"id": "time-04", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales MTD = TOTALMTD ( [Total Sales], 'Date'[Date] )"}
+{"id": "time-05", "category": "time_intelligence", "difficulty": "hard", "dax": "Rolling 3M Sales = CALCULATE ( [Total Sales], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH ) )"}
+{"id": "ratio-01", "category": "ratio", "difficulty": "easy", "dax": "Gross Margin % = DIVIDE ( [Total Sales] - [Total Cost], [Total Sales] )"}
+{"id": "ratio-02", "category": "ratio", "difficulty": "easy", "dax": "Sales per Customer = DIVIDE ( [Total Sales], [Active Customers] )"}
+{"id": "ratio-03", "category": "ratio", "difficulty": "medium", "dax": "% of Total Sales = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALL ( Product ) ) )"}
+{"id": "ratio-04", "category": "ratio", "difficulty": "medium", "dax": "Return Rate = DIVIDE ( [Returned Quantity], [Total Quantity] )"}
+{"id": "ratio-05", "category": "ratio", "difficulty": "easy", "dax": "Average Order Value = DIVIDE ( [Total Sales], [Order Count] )"}
+{"id": "iter-01", "category": "iterator", "difficulty": "medium", "dax": "Sales (Line Level) = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-02", "category": "iterator", "difficulty": "medium", "dax": "Weighted Avg Price = DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ), SUM ( Sales[Quantity] ) )"}
+{"id": "iter-03", "category": "iterator", "difficulty": "medium", "dax": "Total Margin = SUMX ( Sales, Sales[Quantity] * ( Sales[UnitPrice] - Sales[UnitCost] ) )"}
+{"id": "iter-04", "category": "iterator", "difficulty": "medium", "dax": "Largest Line Total = MAXX ( Sales, Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-05", "category": "iterator", "difficulty": "hard", "dax": "High-Value Customers = COUNTROWS ( FILTER ( VALUES ( Customer[CustomerKey] ), [Total Sales] > 10000 ) )"}
+{"id": "rank-01", "category": "ranking", "difficulty": "medium", "dax": "Product Rank by Sales = RANKX ( ALL ( Product[ProductName] ), [Total Sales], , DESC )"}
+{"id": "rank-02", "category": "ranking", "difficulty": "hard", "dax": "Top 5 Products Sales = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Product[ProductName] ), [Total Sales], DESC ) )"}
+{"id": "rank-03", "category": "ranking", "difficulty": "hard", "dax": "Customer Sales Rank = RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-04", "category": "ranking", "difficulty": "medium", "dax": "Is Top 10 Product = IF ( [Product Rank by Sales] <= 10, 1, 0 )"}
+{"id": "rank-05", "category": "ranking", "difficulty": "medium", "dax": "Region Rank = RANKX ( ALL ( 'Geography'[Region] ), [Total Sales], , DESC )"}
+{"id": "filt-01", "category": "filter_context", "difficulty": "medium", "dax": "Sales (All Products) = CALCULATE ( [Total Sales], ALL ( Product ) )"}
+{"id": "filt-02", "category": "filter_context", "difficulty": "easy", "dax": "Online Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Online\" )"}
+{"id": "filt-03", "category": "filter_context", "difficulty": "medium", "dax": "Sales Excl Returns = CALCULATE ( [Total Sales], Sales[OrderStatus] <> \"Returned\" )"}
+{"id": "filt-04", "category": "filter_context", "difficulty": "hard", "dax": "Sales (Keep High Value) = CALCULATE ( [Total Sales], KEEPFILTERS ( Sales[SalesAmount] > 1000 ) )"}
+{"id": "filt-05", "category": "filter_context", "difficulty": "hard", "dax": "Category Share = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Category] ) ) )"}

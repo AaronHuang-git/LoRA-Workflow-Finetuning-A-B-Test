@@ -1,0 +1,711 @@
+{"id": "agg-01", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Sales = SUM ( Sales[SalesAmount] )"}
+{"id": "agg-02", "category": "simple_aggregation", "difficulty": "easy", "dax": "Order Count = DISTINCTCOUNT ( Sales[OrderNumber] )"}
+{"id": "agg-03", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Quantity = SUM ( Sales[Quantity] )"}
+{"id": "agg-04", "category": "simple_aggregation", "difficulty": "easy", "dax": "Active Customers = DISTINCTCOUNT ( Sales[CustomerKey] )"}
+{"id": "agg-05", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Unit Price = AVERAGE ( Sales[UnitPrice] )"}
+{"id": "time-01", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales YTD = TOTALYTD ( [Total Sales], 'Date'[Date] )"}
+{"id": "time-02", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales PY = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-03", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales YoY % = DIVIDE ( [Total Sales] - [Sales PY], [Sales PY] )"}
+{"id": "time-04", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales MTD = TOTALMTD ( [Total Sales], 'Date'[Date] )"}
+{"id": "time-05", "category": "time_intelligence", "difficulty": "hard", "dax": "Rolling 3M Sales = CALCULATE ( [Total Sales], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH ) )"}
+{"id": "ratio-01", "category": "ratio", "difficulty": "easy", "dax": "Gross Margin % = DIVIDE ( [Total Sales] - [Total Cost], [Total Sales] )"}
+{"id": "ratio-02", "category": "ratio", "difficulty": "easy", "dax": "Sales per Customer = DIVIDE ( [Total Sales], [Active Customers] )"}
+{"id": "ratio-03", "category": "ratio", "difficulty": "medium", "dax": "% of Total Sales = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALL ( Product ) ) )"}
+{"id": "ratio-04", "category": "ratio", "difficulty": "medium", "dax": "Return Rate = DIVIDE ( [Returned Quantity], [Total Quantity] )"}
+{"id": "ratio-05", "category": "ratio", "difficulty": "easy", "dax": "Average Order Value = DIVIDE ( [Total Sales], [Order Count] )"}
+{"id": "iter-01", "category": "iterator", "difficulty": "medium", "dax": "Sales (Line Level) = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-02", "category": "iterator", "difficulty": "medium", "dax": "Weighted Avg Price = DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ), SUM ( Sales[Quantity] ) )"}
+{"id": "iter-03", "category": "iterator", "difficulty": "medium", "dax": "Total Margin = SUMX ( Sales, Sales[Quantity] * ( Sales[UnitPrice] - Sales[UnitCost] ) )"}
+{"id": "iter-04", "category": "iterator", "difficulty": "medium", "dax": "Largest Line Total = MAXX ( Sales, Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-05", "category": "iterator", "difficulty": "hard", "dax": "High-Value Customers = COUNTROWS ( FILTER ( VALUES ( Customer[CustomerKey] ), [Total Sales] > 10000 ) )"}
+{"id": "rank-01", "category": "ranking", "difficulty": "medium", "dax": "Product Rank by Sales = RANKX ( ALL ( Product[ProductName] ), [Total Sales], , DESC )"}
+{"id": "rank-02", "category": "ranking", "difficulty": "hard", "dax": "Top 5 Products Sales = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Product[ProductName] ), [Total Sales], DESC ) )"}
+{"id": "rank-03", "category": "ranking", "difficulty": "hard", "dax": "Customer Sales Rank = RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-04", "category": "ranking", "difficulty": "medium", "dax": "Is Top 10 Product = IF ( [Product Rank by Sales] <= 10, 1, 0 )"}
+{"id": "rank-05", "category": "ranking", "difficulty": "medium", "dax": "Region Rank = RANKX ( ALL ( 'Geography'[Region] ), [Total Sales], , DESC )"}
+{"id": "filt-01", "category": "filter_context", "difficulty": "medium", "dax": "Sales (All Products) = CALCULATE ( [Total Sales], ALL ( Product ) )"}
+{"id": "filt-02", "category": "filter_context", "difficulty": "easy", "dax": "Online Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Online\" )"}
+{"id": "filt-03", "category": "filter_context", "difficulty": "medium", "dax": "Sales Excl Returns = CALCULATE ( [Total Sales], Sales[OrderStatus] <> \"Returned\" )"}
+{"id": "filt-04", "category": "filter_context", "difficulty": "hard", "dax": "Sales (Keep High Value) = CALCULATE ( [Total Sales], KEEPFILTERS ( Sales[SalesAmount] > 1000 ) )"}
+{"id": "filt-05", "category": "filter_context", "difficulty": "hard", "dax": "Category Share = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Category] ) ) )"}
+{"id": "simp-gen-0030", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Cost = SUM ( Sales[TotalCost] )"}
+{"id": "simp-gen-0031", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Profit = SUM ( Sales[Profit] )"}
+{"id": "simp-gen-0032", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Discount Amount = SUM ( Sales[DiscountAmount] )"}
+{"id": "simp-gen-0033", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Freight = SUM ( Sales[FreightCost] )"}
+{"id": "simp-gen-0034", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Tax Amount = SUM ( Sales[TaxAmount] )"}
+{"id": "simp-gen-0035", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Line Items = COUNTROWS ( Sales )"}
+{"id": "simp-gen-0036", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Products = DISTINCTCOUNT ( Product[ProductKey] )"}
+{"id": "simp-gen-0037", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Customers = DISTINCTCOUNT ( Customer[CustomerKey] )"}
+{"id": "simp-gen-0038", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Cities = DISTINCTCOUNT ( Geography[City] )"}
+{"id": "simp-gen-0039", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Countries = DISTINCTCOUNT ( Geography[Country] )"}
+{"id": "simp-gen-0040", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total States = DISTINCTCOUNT ( Geography[StateProvince] )"}
+{"id": "simp-gen-0041", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Categories = DISTINCTCOUNT ( Product[Category] )"}
+{"id": "simp-gen-0042", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Subcategories = DISTINCTCOUNT ( Product[Subcategory] )"}
+{"id": "simp-gen-0043", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Sales Amount = AVERAGE ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0044", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Order Quantity = AVERAGE ( Sales[Quantity] )"}
+{"id": "simp-gen-0045", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Discount Percent = AVERAGE ( Sales[DiscountPercent] )"}
+{"id": "simp-gen-0046", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Freight Cost = AVERAGE ( Sales[FreightCost] )"}
+{"id": "simp-gen-0047", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Profit = AVERAGE ( Sales[Profit] )"}
+{"id": "simp-gen-0048", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Cost = AVERAGE ( Sales[TotalCost] )"}
+{"id": "simp-gen-0049", "category": "simple_aggregation", "difficulty": "easy", "dax": "Max Sales Amount = MAX ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0050", "category": "simple_aggregation", "difficulty": "easy", "dax": "Min Sales Amount = MIN ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0051", "category": "simple_aggregation", "difficulty": "easy", "dax": "Max Unit Price = MAX ( Sales[UnitPrice] )"}
+{"id": "simp-gen-0052", "category": "simple_aggregation", "difficulty": "easy", "dax": "Min Unit Price = MIN ( Sales[UnitPrice] )"}
+{"id": "simp-gen-0053", "category": "simple_aggregation", "difficulty": "easy", "dax": "Max Order Quantity = MAX ( Sales[Quantity] )"}
+{"id": "simp-gen-0054", "category": "simple_aggregation", "difficulty": "easy", "dax": "Min Order Quantity = MIN ( Sales[Quantity] )"}
+{"id": "simp-gen-0055", "category": "simple_aggregation", "difficulty": "easy", "dax": "Unique Order Dates = DISTINCTCOUNT ( Sales[OrderDate] )"}
+{"id": "simp-gen-0056", "category": "simple_aggregation", "difficulty": "easy", "dax": "Unique Ship Dates = DISTINCTCOUNT ( Sales[ShipDate] )"}
+{"id": "simp-gen-0057", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Sales Territories = DISTINCTCOUNT ( Geography[SalesTerritory] )"}
+{"id": "simp-gen-0058", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Store Count = DISTINCTCOUNT ( Sales[StoreKey] )"}
+{"id": "simp-gen-0059", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Employee Count = DISTINCTCOUNT ( Sales[EmployeeKey] )"}
+{"id": "simp-gen-0060", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Resellers = DISTINCTCOUNT ( Sales[ResellerKey] )"}
+{"id": "simp-gen-0061", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Promotions Used = DISTINCTCOUNT ( Sales[PromotionKey] )"}
+{"id": "simp-gen-0062", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Currency Types = DISTINCTCOUNT ( Sales[CurrencyKey] )"}
+{"id": "simp-gen-0063", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Product Colors = DISTINCTCOUNT ( Product[Color] )"}
+{"id": "simp-gen-0064", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Product Sizes = DISTINCTCOUNT ( Product[Size] )"}
+{"id": "simp-gen-0065", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Product Styles = DISTINCTCOUNT ( Product[Style] )"}
+{"id": "simp-gen-0066", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Customer Segments = DISTINCTCOUNT ( Customer[CustomerSegment] )"}
+{"id": "simp-gen-0067", "category": "simple_aggregation", "difficulty": "easy", "dax": "Average Customer Age = AVERAGE ( Customer[Age] )"}
+{"id": "simp-gen-0068", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Return Amount = SUM ( Sales[ReturnAmount] )"}
+{"id": "simp-gen-0069", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Return Quantity = SUM ( Sales[ReturnQuantity] )"}
+{"id": "simp-gen-0070", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Net Revenue = SUM ( Sales[NetRevenue] )"}
+{"id": "simp-gen-0071", "category": "simple_aggregation", "difficulty": "easy", "dax": "Max Profit = MAX ( Sales[Profit] )"}
+{"id": "simp-gen-0072", "category": "simple_aggregation", "difficulty": "easy", "dax": "Min Profit = MIN ( Sales[Profit] )"}
+{"id": "simp-gen-0073", "category": "simple_aggregation", "difficulty": "easy", "dax": "Total Sales Transactions = COUNTROWS ( Sales )"}
+{"id": "simp-gen-0074", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Revenue = SUM ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0075", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Quantity Sold = SUM ( Sales[Quantity] )"}
+{"id": "simp-gen-0076", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Transactions = COUNTROWS ( Sales )"}
+{"id": "simp-gen-0077", "category": "simple_aggregation", "difficulty": "medium", "dax": "Average Sale Amount = AVERAGE ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0078", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Customers = DISTINCTCOUNT ( Sales[CustomerKey] )"}
+{"id": "simp-gen-0079", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Products Sold = DISTINCTCOUNT ( Sales[ProductKey] )"}
+{"id": "simp-gen-0080", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Orders = DISTINCTCOUNT ( Sales[OrderNumber] )"}
+{"id": "simp-gen-0081", "category": "simple_aggregation", "difficulty": "medium", "dax": "Max Sale Amount = MAX ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0082", "category": "simple_aggregation", "difficulty": "medium", "dax": "Min Sale Amount = MIN ( Sales[SalesAmount] )"}
+{"id": "simp-gen-0083", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Bonus Amount = SUM ( Sales[BonusAmount] )"}
+{"id": "simp-gen-0084", "category": "simple_aggregation", "difficulty": "medium", "dax": "Average Unit Cost = AVERAGE ( Sales[UnitCost] )"}
+{"id": "simp-gen-0085", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Shipping Cost = SUM ( Sales[ShippingCost] )"}
+{"id": "simp-gen-0086", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Countries = DISTINCTCOUNT ( Geography[Country] )"}
+{"id": "simp-gen-0087", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique States = DISTINCTCOUNT ( Geography[StateProvince] )"}
+{"id": "simp-gen-0088", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Postal Codes = DISTINCTCOUNT ( Geography[PostalCode] )"}
+{"id": "simp-gen-0089", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Product Count = DISTINCTCOUNT ( Sales[ProductKey] )"}
+{"id": "simp-gen-0090", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Male Customers = COUNTROWS ( FILTER ( Customer, Customer[Gender] = \"Male\" ) )"}
+{"id": "simp-gen-0091", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Female Customers = COUNTROWS ( FILTER ( Customer, Customer[Gender] = \"Female\" ) )"}
+{"id": "simp-gen-0092", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Brands = DISTINCTCOUNT ( Product[Brand] )"}
+{"id": "simp-gen-0093", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Product Colors = DISTINCTCOUNT ( Product[Color] )"}
+{"id": "simp-gen-0094", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Sales Territories = DISTINCTCOUNT ( Sales[TerritoryKey] )"}
+{"id": "simp-gen-0095", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Standard Cost = SUM ( Sales[StandardCost] )"}
+{"id": "simp-gen-0096", "category": "simple_aggregation", "difficulty": "medium", "dax": "Average List Price = AVERAGE ( Product[ListPrice] )"}
+{"id": "simp-gen-0097", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Returned Orders = DISTINCTCOUNT ( Sales[ReturnOrderNumber] )"}
+{"id": "simp-gen-0098", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Sales Days = DISTINCTCOUNT ( Sales[OrderDateKey] )"}
+{"id": "simp-gen-0099", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Invoice Lines = COUNTROWS ( Sales )"}
+{"id": "simp-gen-0100", "category": "simple_aggregation", "difficulty": "medium", "dax": "Average Profit Per Row = AVERAGE ( Sales[Profit] )"}
+{"id": "simp-gen-0101", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Gross Sales = SUM ( Sales[GrossSalesAmount] )"}
+{"id": "simp-gen-0102", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Channels = DISTINCTCOUNT ( Sales[SalesChannel] )"}
+{"id": "simp-gen-0103", "category": "simple_aggregation", "difficulty": "medium", "dax": "Unique Product Models = DISTINCTCOUNT ( Product[ModelName] )"}
+{"id": "simp-gen-0104", "category": "simple_aggregation", "difficulty": "medium", "dax": "Min Unit Cost = MIN ( Sales[UnitCost] )"}
+{"id": "simp-gen-0105", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Handling Cost = SUM ( Sales[HandlingCost] )"}
+{"id": "simp-gen-0106", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Customers = COUNTROWS ( Customer )"}
+{"id": "simp-gen-0107", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Products = COUNTROWS ( Product )"}
+{"id": "simp-gen-0108", "category": "simple_aggregation", "difficulty": "medium", "dax": "Average Tax Rate = AVERAGE ( Sales[TaxRate] )"}
+{"id": "simp-gen-0109", "category": "simple_aggregation", "difficulty": "medium", "dax": "Total Sales Regions = DISTINCTCOUNT ( Geography[Region] )"}
+{"id": "simp-gen-0110", "category": "simple_aggregation", "difficulty": "hard", "dax": "Gross Revenue = SUM ( Sales[GrossRevenue] )"}
+{"id": "simp-gen-0111", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Units Sold = SUM ( Sales[OrderQuantity] )"}
+{"id": "simp-gen-0112", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Freight Cost = SUM ( Sales[FreightCost] )"}
+{"id": "simp-gen-0113", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Insurance Cost = SUM ( Sales[InsuranceCost] )"}
+{"id": "simp-gen-0114", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Commission = SUM ( Sales[CommissionAmount] )"}
+{"id": "simp-gen-0115", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Refund Amount = SUM ( Sales[RefundAmount] )"}
+{"id": "simp-gen-0116", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Returns = SUM ( Sales[ReturnQuantity] )"}
+{"id": "simp-gen-0117", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Backorder Quantity = SUM ( Sales[BackorderQuantity] )"}
+{"id": "simp-gen-0118", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Order Value = AVERAGE ( Sales[OrderTotal] )"}
+{"id": "simp-gen-0119", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Freight Per Order = AVERAGE ( Sales[FreightCost] )"}
+{"id": "simp-gen-0120", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Selling Price = AVERAGE ( Sales[SalePrice] )"}
+{"id": "simp-gen-0121", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Days To Ship = AVERAGE ( Sales[DaysToShip] )"}
+{"id": "simp-gen-0122", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Margin Percent = AVERAGE ( Sales[MarginPercent] )"}
+{"id": "simp-gen-0123", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Product Weight = AVERAGE ( Product[Weight] )"}
+{"id": "simp-gen-0124", "category": "simple_aggregation", "difficulty": "hard", "dax": "Average Standard Cost = AVERAGE ( Product[StandardCost] )"}
+{"id": "simp-gen-0125", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Customers = DISTINCTCOUNT ( Sales[CustomerKey] )"}
+{"id": "simp-gen-0126", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Products Sold = DISTINCTCOUNT ( Sales[ProductKey] )"}
+{"id": "simp-gen-0127", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Product Categories = DISTINCTCOUNT ( Product[CategoryName] )"}
+{"id": "simp-gen-0128", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Product Subcategories = DISTINCTCOUNT ( Product[SubcategoryName] )"}
+{"id": "simp-gen-0129", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Product Colors = DISTINCTCOUNT ( Product[Color] )"}
+{"id": "simp-gen-0130", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Countries = DISTINCTCOUNT ( Geography[CountryRegion] )"}
+{"id": "simp-gen-0131", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct States = DISTINCTCOUNT ( Geography[StateProvince] )"}
+{"id": "simp-gen-0132", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Cities = DISTINCTCOUNT ( Geography[City] )"}
+{"id": "simp-gen-0133", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Postal Codes = DISTINCTCOUNT ( Geography[PostalCode] )"}
+{"id": "simp-gen-0134", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Customer Segments = DISTINCTCOUNT ( Customer[CustomerSegment] )"}
+{"id": "simp-gen-0135", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Customer Occupations = DISTINCTCOUNT ( Customer[Occupation] )"}
+{"id": "simp-gen-0136", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Education Levels = DISTINCTCOUNT ( Customer[EducationLevel] )"}
+{"id": "simp-gen-0137", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Salespeople = DISTINCTCOUNT ( Sales[SalespersonID] )"}
+{"id": "simp-gen-0138", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Ship Methods = DISTINCTCOUNT ( Sales[ShipMethod] )"}
+{"id": "simp-gen-0139", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Currencies = DISTINCTCOUNT ( Sales[CurrencyCode] )"}
+{"id": "simp-gen-0140", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Order Statuses = DISTINCTCOUNT ( Sales[OrderStatus] )"}
+{"id": "simp-gen-0141", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Sales Months = DISTINCTCOUNT ( 'Date'[MonthKey] )"}
+{"id": "simp-gen-0142", "category": "simple_aggregation", "difficulty": "hard", "dax": "Distinct Sales Years = DISTINCTCOUNT ( 'Date'[CalendarYear] )"}
+{"id": "simp-gen-0143", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Return Transactions = COUNTROWS ( FILTER ( Sales, Sales[ReturnQuantity] > 0 ) )"}
+{"id": "simp-gen-0144", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Active Products = COUNTROWS ( FILTER ( Product, Product[IsActive] = TRUE () ) )"}
+{"id": "simp-gen-0145", "category": "simple_aggregation", "difficulty": "hard", "dax": "Total Product Models = DISTINCTCOUNT ( Product[ModelName] )"}
+{"id": "simp-gen-0146", "category": "simple_aggregation", "difficulty": "hard", "dax": "Max Single Order Revenue = MAX ( Sales[OrderTotal] )"}
+{"id": "time-gen-0147", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue QTD = TOTALQTD ( [Total Revenue], 'Date'[Date] )"}
+{"id": "time-gen-0148", "category": "time_intelligence", "difficulty": "easy", "dax": "Units Sold MTD = TOTALMTD ( [Total Units], 'Date'[Date] )"}
+{"id": "time-gen-0149", "category": "time_intelligence", "difficulty": "easy", "dax": "Units Sold YTD = TOTALYTD ( [Total Units], 'Date'[Date] )"}
+{"id": "time-gen-0150", "category": "time_intelligence", "difficulty": "easy", "dax": "Units Sold QTD = TOTALQTD ( [Total Units], 'Date'[Date] )"}
+{"id": "time-gen-0151", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue MTD = TOTALMTD ( [Total Revenue], 'Date'[Date] )"}
+{"id": "time-gen-0152", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue YTD = TOTALYTD ( [Total Revenue], 'Date'[Date] )"}
+{"id": "time-gen-0153", "category": "time_intelligence", "difficulty": "easy", "dax": "Cost MTD = TOTALMTD ( [Total Cost], 'Date'[Date] )"}
+{"id": "time-gen-0154", "category": "time_intelligence", "difficulty": "easy", "dax": "Cost YTD = TOTALYTD ( [Total Cost], 'Date'[Date] )"}
+{"id": "time-gen-0155", "category": "time_intelligence", "difficulty": "easy", "dax": "Cost QTD = TOTALQTD ( [Total Cost], 'Date'[Date] )"}
+{"id": "time-gen-0156", "category": "time_intelligence", "difficulty": "easy", "dax": "Profit MTD = TOTALMTD ( [Gross Profit], 'Date'[Date] )"}
+{"id": "time-gen-0157", "category": "time_intelligence", "difficulty": "easy", "dax": "Profit YTD = TOTALYTD ( [Gross Profit], 'Date'[Date] )"}
+{"id": "time-gen-0158", "category": "time_intelligence", "difficulty": "easy", "dax": "Profit QTD = TOTALQTD ( [Gross Profit], 'Date'[Date] )"}
+{"id": "time-gen-0159", "category": "time_intelligence", "difficulty": "easy", "dax": "Sales Prior Month = CALCULATE ( [Total Sales], DATEADD ( 'Date'[Date], -1, MONTH ) )"}
+{"id": "time-gen-0160", "category": "time_intelligence", "difficulty": "easy", "dax": "Sales Prior Quarter = CALCULATE ( [Total Sales], DATEADD ( 'Date'[Date], -1, QUARTER ) )"}
+{"id": "time-gen-0161", "category": "time_intelligence", "difficulty": "easy", "dax": "Sales Prior Year = CALCULATE ( [Total Sales], DATEADD ( 'Date'[Date], -1, YEAR ) )"}
+{"id": "time-gen-0162", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue PY = CALCULATE ( [Total Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0163", "category": "time_intelligence", "difficulty": "easy", "dax": "Units Sold PY = CALCULATE ( [Total Units], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0164", "category": "time_intelligence", "difficulty": "easy", "dax": "Gross Profit PY = CALCULATE ( [Gross Profit], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0165", "category": "time_intelligence", "difficulty": "easy", "dax": "Cost PY = CALCULATE ( [Total Cost], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0166", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue YoY Change = [Total Revenue] - [Revenue PY]"}
+{"id": "time-gen-0167", "category": "time_intelligence", "difficulty": "easy", "dax": "Units YoY Change = [Total Units] - [Units Sold PY]"}
+{"id": "time-gen-0168", "category": "time_intelligence", "difficulty": "easy", "dax": "Profit YoY Change = [Gross Profit] - [Gross Profit PY]"}
+{"id": "time-gen-0169", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 3M Revenue = CALCULATE ( [Total Revenue], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH ) )"}
+{"id": "time-gen-0170", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 6M Sales = CALCULATE ( [Total Sales], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -6, MONTH ) )"}
+{"id": "time-gen-0171", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 12M Sales = CALCULATE ( [Total Sales], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -12, MONTH ) )"}
+{"id": "time-gen-0172", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 6M Revenue = CALCULATE ( [Total Revenue], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -6, MONTH ) )"}
+{"id": "time-gen-0173", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 3M Units = CALCULATE ( [Total Units], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH ) )"}
+{"id": "time-gen-0174", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 12M Units = CALCULATE ( [Total Units], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -12, MONTH ) )"}
+{"id": "time-gen-0175", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 3M Cost = CALCULATE ( [Total Cost], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH ) )"}
+{"id": "time-gen-0176", "category": "time_intelligence", "difficulty": "easy", "dax": "Rolling 6M Profit = CALCULATE ( [Gross Profit], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -6, MONTH ) )"}
+{"id": "time-gen-0177", "category": "time_intelligence", "difficulty": "easy", "dax": "Sales Next Month Forecast = CALCULATE ( [Total Sales], DATEADD ( 'Date'[Date], 1, MONTH ) )"}
+{"id": "time-gen-0178", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue Prior Month = CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) )"}
+{"id": "time-gen-0179", "category": "time_intelligence", "difficulty": "easy", "dax": "Revenue Prior Quarter = CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, QUARTER ) )"}
+{"id": "time-gen-0180", "category": "time_intelligence", "difficulty": "easy", "dax": "Transactions MTD = TOTALMTD ( [Total Transactions], 'Date'[Date] )"}
+{"id": "time-gen-0181", "category": "time_intelligence", "difficulty": "easy", "dax": "Transactions YTD = TOTALYTD ( [Total Transactions], 'Date'[Date] )"}
+{"id": "time-gen-0182", "category": "time_intelligence", "difficulty": "easy", "dax": "Transactions QTD = TOTALQTD ( [Total Transactions], 'Date'[Date] )"}
+{"id": "time-gen-0183", "category": "time_intelligence", "difficulty": "easy", "dax": "Transactions PY = CALCULATE ( [Total Transactions], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0184", "category": "time_intelligence", "difficulty": "easy", "dax": "Discount MTD = TOTALMTD ( [Total Discount], 'Date'[Date] )"}
+{"id": "time-gen-0185", "category": "time_intelligence", "difficulty": "easy", "dax": "Discount YTD = TOTALYTD ( [Total Discount], 'Date'[Date] )"}
+{"id": "time-gen-0186", "category": "time_intelligence", "difficulty": "easy", "dax": "Returns MTD = TOTALMTD ( [Total Returns], 'Date'[Date] )"}
+{"id": "time-gen-0187", "category": "time_intelligence", "difficulty": "easy", "dax": "Returns YTD = TOTALYTD ( [Total Returns], 'Date'[Date] )"}
+{"id": "time-gen-0188", "category": "time_intelligence", "difficulty": "easy", "dax": "Returns PY = CALCULATE ( [Total Returns], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0189", "category": "time_intelligence", "difficulty": "easy", "dax": "Net Sales YTD = TOTALYTD ( [Net Sales], 'Date'[Date] )"}
+{"id": "time-gen-0190", "category": "time_intelligence", "difficulty": "easy", "dax": "Net Sales MTD = TOTALMTD ( [Net Sales], 'Date'[Date] )"}
+{"id": "time-gen-0191", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales QTD = TOTALQTD ( [Total Sales], 'Date'[Date] )"}
+{"id": "time-gen-0192", "category": "time_intelligence", "difficulty": "medium", "dax": "Gross Profit YTD = TOTALYTD ( [Gross Profit], 'Date'[Date] )"}
+{"id": "time-gen-0193", "category": "time_intelligence", "difficulty": "medium", "dax": "Gross Profit QTD = TOTALQTD ( [Gross Profit], 'Date'[Date] )"}
+{"id": "time-gen-0194", "category": "time_intelligence", "difficulty": "medium", "dax": "Total Sales PY = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0195", "category": "time_intelligence", "difficulty": "medium", "dax": "Total Cost PY = CALCULATE ( [Total Cost], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0196", "category": "time_intelligence", "difficulty": "medium", "dax": "Sales YoY Change = [Total Sales] - [Total Sales PY]"}
+{"id": "time-gen-0197", "category": "time_intelligence", "difficulty": "medium", "dax": "Units Sold YoY Change = [Total Units] - [Units Sold PY]"}
+{"id": "time-gen-0198", "category": "time_intelligence", "difficulty": "medium", "dax": "Gross Profit YoY Change = [Gross Profit] - [Gross Profit PY]"}
+{"id": "time-gen-0199", "category": "time_intelligence", "difficulty": "medium", "dax": "Cost YoY Change = [Total Cost] - [Total Cost PY]"}
+{"id": "time-gen-0200", "category": "time_intelligence", "difficulty": "medium", "dax": "Transactions YoY Change = [Total Transactions] - [Transactions PY]"}
+{"id": "time-gen-0201", "category": "time_intelligence", "difficulty": "medium", "dax": "Revenue Prior Year = CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, YEAR ) )"}
+{"id": "time-gen-0202", "category": "time_intelligence", "difficulty": "medium", "dax": "Gross Profit Prior Month = CALCULATE ( [Gross Profit], DATEADD ( 'Date'[Date], -1, MONTH ) )"}
+{"id": "time-gen-0203", "category": "time_intelligence", "difficulty": "medium", "dax": "Gross Profit Prior Quarter = CALCULATE ( [Gross Profit], DATEADD ( 'Date'[Date], -1, QUARTER ) )"}
+{"id": "time-gen-0204", "category": "time_intelligence", "difficulty": "medium", "dax": "Units Sold Prior Month = CALCULATE ( [Total Units], DATEADD ( 'Date'[Date], -1, MONTH ) )"}
+{"id": "time-gen-0205", "category": "time_intelligence", "difficulty": "medium", "dax": "Units Sold Prior Quarter = CALCULATE ( [Total Units], DATEADD ( 'Date'[Date], -1, QUARTER ) )"}
+{"id": "time-gen-0206", "category": "time_intelligence", "difficulty": "medium", "dax": "Cost Prior Month = CALCULATE ( [Total Cost], DATEADD ( 'Date'[Date], -1, MONTH ) )"}
+{"id": "time-gen-0207", "category": "time_intelligence", "difficulty": "medium", "dax": "Cost Prior Quarter = CALCULATE ( [Total Cost], DATEADD ( 'Date'[Date], -1, QUARTER ) )"}
+{"id": "time-gen-0208", "category": "time_intelligence", "difficulty": "medium", "dax": "Rolling 12M Revenue = CALCULATE ( [Total Revenue], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -12, MONTH ) )"}
+{"id": "time-gen-0209", "category": "time_intelligence", "difficulty": "medium", "dax": "Rolling 6M Units = CALCULATE ( [Total Units], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -6, MONTH ) )"}
+{"id": "time-gen-0210", "category": "time_intelligence", "difficulty": "medium", "dax": "Rolling 3M Gross Profit = CALCULATE ( [Gross Profit], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -3, MONTH ) )"}
+{"id": "time-gen-0211", "category": "time_intelligence", "difficulty": "medium", "dax": "Rolling 12M Gross Profit = CALCULATE ( [Gross Profit], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -12, MONTH ) )"}
+{"id": "time-gen-0212", "category": "time_intelligence", "difficulty": "medium", "dax": "Revenue MoM Change = [Total Revenue] - [Revenue Prior Month]"}
+{"id": "time-gen-0213", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue YoY % = DIVIDE ( [Total Revenue] - [Revenue PY], [Revenue PY] )"}
+{"id": "time-gen-0214", "category": "time_intelligence", "difficulty": "hard", "dax": "Net Sales QTD = TOTALQTD ( [Net Sales], 'Date'[Date] )"}
+{"id": "time-gen-0215", "category": "time_intelligence", "difficulty": "hard", "dax": "Net Sales PY = CALCULATE ( [Net Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0216", "category": "time_intelligence", "difficulty": "hard", "dax": "Net Sales YoY % = DIVIDE ( [Net Sales] - [Net Sales PY], [Net Sales PY] )"}
+{"id": "time-gen-0217", "category": "time_intelligence", "difficulty": "hard", "dax": "Gross Profit MTD = TOTALMTD ( [Gross Profit], 'Date'[Date] )"}
+{"id": "time-gen-0218", "category": "time_intelligence", "difficulty": "hard", "dax": "Units Sold YoY % = DIVIDE ( [Total Units] - [Units Sold PY], [Units Sold PY] )"}
+{"id": "time-gen-0219", "category": "time_intelligence", "difficulty": "hard", "dax": "Transactions YoY % = DIVIDE ( [Total Transactions] - [Transactions PY], [Transactions PY] )"}
+{"id": "time-gen-0220", "category": "time_intelligence", "difficulty": "hard", "dax": "Cost YoY % = DIVIDE ( [Total Cost] - [Cost PY], [Cost PY] )"}
+{"id": "time-gen-0221", "category": "time_intelligence", "difficulty": "hard", "dax": "Rolling 12M Transactions = CALCULATE ( [Total Transactions], DATESINPERIOD ( 'Date'[Date], MAX ( 'Date'[Date] ), -12, MONTH ) )"}
+{"id": "time-gen-0222", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue MoM Change = [Total Revenue] - CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) )"}
+{"id": "time-gen-0223", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue MoM % = DIVIDE ( [Total Revenue] - CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) ), CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, MONTH ) ) )"}
+{"id": "time-gen-0224", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue QoQ Change = [Total Revenue] - CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, QUARTER ) )"}
+{"id": "time-gen-0225", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue QoQ % = DIVIDE ( [Total Revenue] - CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, QUARTER ) ), CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], -1, QUARTER ) ) )"}
+{"id": "time-gen-0226", "category": "time_intelligence", "difficulty": "hard", "dax": "Gross Profit YTD PY = CALCULATE ( [Gross Profit YTD], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0227", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue YTD PY = CALCULATE ( [Revenue YTD], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )"}
+{"id": "time-gen-0228", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue YTD YoY % = DIVIDE ( [Revenue YTD] - [Revenue YTD PY], [Revenue YTD PY] )"}
+{"id": "time-gen-0229", "category": "time_intelligence", "difficulty": "hard", "dax": "Returns YoY % = DIVIDE ( [Total Returns] - [Returns PY], [Returns PY] )"}
+{"id": "time-gen-0230", "category": "time_intelligence", "difficulty": "hard", "dax": "Revenue Next Year Forecast = CALCULATE ( [Total Revenue], DATEADD ( 'Date'[Date], 1, YEAR ) )"}
+{"id": "rati-gen-0231", "category": "ratio", "difficulty": "easy", "dax": "Discount Rate = DIVIDE ( SUM ( Sales[DiscountAmount] ), SUM ( Sales[GrossSales] ) )"}
+{"id": "rati-gen-0232", "category": "ratio", "difficulty": "easy", "dax": "Cost per Unit Sold = DIVIDE ( SUM ( Sales[TotalCost] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0233", "category": "ratio", "difficulty": "easy", "dax": "Revenue per Order = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0234", "category": "ratio", "difficulty": "easy", "dax": "Profit Margin % = DIVIDE ( SUM ( Sales[Profit] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0235", "category": "ratio", "difficulty": "easy", "dax": "Tax Rate % = DIVIDE ( SUM ( Sales[TaxAmount] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0236", "category": "ratio", "difficulty": "easy", "dax": "Shipping Cost Ratio = DIVIDE ( SUM ( Sales[ShippingCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0237", "category": "ratio", "difficulty": "easy", "dax": "Sales per Product = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[ProductKey] ) )"}
+{"id": "rati-gen-0238", "category": "ratio", "difficulty": "easy", "dax": "Units per Order = DIVIDE ( SUM ( Sales[Quantity] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0239", "category": "ratio", "difficulty": "easy", "dax": "Revenue per Employee = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[EmployeeID] ) )"}
+{"id": "rati-gen-0240", "category": "ratio", "difficulty": "easy", "dax": "Average Discount per Order = DIVIDE ( SUM ( Sales[DiscountAmount] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0241", "category": "ratio", "difficulty": "easy", "dax": "Sales per Transaction = DIVIDE ( SUM ( Sales[SalesAmount] ), COUNTROWS ( Sales ) )"}
+{"id": "rati-gen-0242", "category": "ratio", "difficulty": "easy", "dax": "Cost Share of Revenue = DIVIDE ( SUM ( Sales[TotalCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0243", "category": "ratio", "difficulty": "easy", "dax": "Refund Rate = DIVIDE ( SUM ( Sales[RefundAmount] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0244", "category": "ratio", "difficulty": "easy", "dax": "Category Sales Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product[Category] ) ) )"}
+{"id": "rati-gen-0245", "category": "ratio", "difficulty": "easy", "dax": "Customer Sales Contribution = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Customer ) ) )"}
+{"id": "rati-gen-0246", "category": "ratio", "difficulty": "easy", "dax": "Region Sales Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Geography ) ) )"}
+{"id": "rati-gen-0247", "category": "ratio", "difficulty": "easy", "dax": "Average Price per Unit = DIVIDE ( SUM ( Sales[SalesAmount] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0248", "category": "ratio", "difficulty": "easy", "dax": "Average Cost per Order = DIVIDE ( SUM ( Sales[TotalCost] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0249", "category": "ratio", "difficulty": "easy", "dax": "Profit per Unit = DIVIDE ( SUM ( Sales[Profit] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0250", "category": "ratio", "difficulty": "easy", "dax": "Orders per Customer = DIVIDE ( DISTINCTCOUNT ( Sales[OrderID] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0251", "category": "ratio", "difficulty": "easy", "dax": "Freight % of Sales = DIVIDE ( SUM ( Sales[FreightCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0252", "category": "ratio", "difficulty": "easy", "dax": "Online Sales Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[Channel] = \"Online\" ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0253", "category": "ratio", "difficulty": "easy", "dax": "Store Sales Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[Channel] = \"Store\" ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0254", "category": "ratio", "difficulty": "easy", "dax": "New Customer Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Customer[CustomerType] = \"New\" ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0255", "category": "ratio", "difficulty": "easy", "dax": "Discount per Unit = DIVIDE ( SUM ( Sales[DiscountAmount] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0256", "category": "ratio", "difficulty": "easy", "dax": "Net Revenue Ratio = DIVIDE ( SUM ( Sales[NetSales] ), SUM ( Sales[GrossSales] ) )"}
+{"id": "rati-gen-0257", "category": "ratio", "difficulty": "easy", "dax": "Product Sales Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product ) ) )"}
+{"id": "rati-gen-0258", "category": "ratio", "difficulty": "easy", "dax": "Sales per Geography = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[GeographyKey] ) )"}
+{"id": "rati-gen-0259", "category": "ratio", "difficulty": "easy", "dax": "Returned Orders Rate = DIVIDE ( CALCULATE ( DISTINCTCOUNT ( Sales[OrderID] ), Sales[IsReturned] = TRUE () ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0260", "category": "ratio", "difficulty": "easy", "dax": "Warranty Cost Ratio = DIVIDE ( SUM ( Sales[WarrantyCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0261", "category": "ratio", "difficulty": "easy", "dax": "Subcategory Sales Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product[SubCategory] ) ) )"}
+{"id": "rati-gen-0262", "category": "ratio", "difficulty": "easy", "dax": "Average Selling Price = DIVIDE ( SUM ( Sales[SalesAmount] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0263", "category": "ratio", "difficulty": "easy", "dax": "Revenue per Region = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Geography[Region] ) )"}
+{"id": "rati-gen-0264", "category": "ratio", "difficulty": "easy", "dax": "Cost per Customer = DIVIDE ( SUM ( Sales[TotalCost] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0265", "category": "ratio", "difficulty": "easy", "dax": "Profit per Customer = DIVIDE ( SUM ( Sales[Profit] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0266", "category": "ratio", "difficulty": "easy", "dax": "Fulfillment Cost Ratio = DIVIDE ( SUM ( Sales[FulfillmentCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0267", "category": "ratio", "difficulty": "easy", "dax": "Quantity Share of Total = DIVIDE ( SUM ( Sales[Quantity] ), CALCULATE ( SUM ( Sales[Quantity] ), ALL ( Sales ) ) )"}
+{"id": "rati-gen-0268", "category": "ratio", "difficulty": "easy", "dax": "Orders per Region = DIVIDE ( DISTINCTCOUNT ( Sales[OrderID] ), DISTINCTCOUNT ( Geography[Region] ) )"}
+{"id": "rati-gen-0269", "category": "ratio", "difficulty": "easy", "dax": "Gross Sales per Customer = DIVIDE ( SUM ( Sales[GrossSales] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0270", "category": "ratio", "difficulty": "easy", "dax": "Handling Cost % = DIVIDE ( SUM ( Sales[HandlingCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0271", "category": "ratio", "difficulty": "easy", "dax": "List Price to Sale Price Ratio = DIVIDE ( SUM ( Sales[SalesAmount] ), SUM ( Sales[ListPrice] ) )"}
+{"id": "rati-gen-0272", "category": "ratio", "difficulty": "easy", "dax": "Revenue per Category = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Product[Category] ) )"}
+{"id": "rati-gen-0273", "category": "ratio", "difficulty": "easy", "dax": "Marketing Cost Ratio = DIVIDE ( SUM ( Sales[MarketingCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0274", "category": "ratio", "difficulty": "easy", "dax": "Transactions per Customer = DIVIDE ( COUNTROWS ( Sales ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0275", "category": "ratio", "difficulty": "medium", "dax": "Revenue per Transaction = DIVIDE ( SUM ( Sales[SalesAmount] ), COUNTROWS ( Sales ) )"}
+{"id": "rati-gen-0276", "category": "ratio", "difficulty": "medium", "dax": "Profit Margin per Unit = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0277", "category": "ratio", "difficulty": "medium", "dax": "Customer Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Customer ) ) )"}
+{"id": "rati-gen-0278", "category": "ratio", "difficulty": "medium", "dax": "Product Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product ) ) )"}
+{"id": "rati-gen-0279", "category": "ratio", "difficulty": "medium", "dax": "Geography Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( 'Geography' ) ) )"}
+{"id": "rati-gen-0280", "category": "ratio", "difficulty": "medium", "dax": "Channel Revenue Mix % = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Sales[Channel] ) ) )"}
+{"id": "rati-gen-0281", "category": "ratio", "difficulty": "medium", "dax": "Returns to Sales Ratio = DIVIDE ( SUM ( Sales[ReturnQuantity] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0282", "category": "ratio", "difficulty": "medium", "dax": "Revenue per Customer = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0283", "category": "ratio", "difficulty": "medium", "dax": "Revenue per Product = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[ProductKey] ) )"}
+{"id": "rati-gen-0284", "category": "ratio", "difficulty": "medium", "dax": "Profit per Order = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0285", "category": "ratio", "difficulty": "medium", "dax": "Freight per Unit = DIVIDE ( SUM ( Sales[FreightCost] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0286", "category": "ratio", "difficulty": "medium", "dax": "Tax per Unit = DIVIDE ( SUM ( Sales[TaxAmount] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0287", "category": "ratio", "difficulty": "medium", "dax": "Net Revenue per Customer = DIVIDE ( SUM ( Sales[NetRevenue] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0288", "category": "ratio", "difficulty": "medium", "dax": "Operating Cost Ratio = DIVIDE ( SUM ( Sales[OperatingCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0289", "category": "ratio", "difficulty": "medium", "dax": "Promotion Discount Share = DIVIDE ( SUM ( Sales[PromotionDiscount] ), SUM ( Sales[GrossSales] ) )"}
+{"id": "rati-gen-0290", "category": "ratio", "difficulty": "medium", "dax": "Online Sales Mix % = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[Channel] = \"Online\" ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0291", "category": "ratio", "difficulty": "medium", "dax": "Repeat Customer Rate = DIVIDE ( CALCULATE ( DISTINCTCOUNT ( Sales[CustomerKey] ), Sales[OrderCount] > 1 ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0292", "category": "ratio", "difficulty": "medium", "dax": "New Customer Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Customer[IsNewCustomer] = TRUE () ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0293", "category": "ratio", "difficulty": "medium", "dax": "Category Revenue Concentration = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product[Category] ) ) )"}
+{"id": "rati-gen-0294", "category": "ratio", "difficulty": "medium", "dax": "Subcategory Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALLEXCEPT ( Product, Product[Category] ) ) )"}
+{"id": "rati-gen-0295", "category": "ratio", "difficulty": "medium", "dax": "Sales per Store = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[StoreKey] ) )"}
+{"id": "rati-gen-0296", "category": "ratio", "difficulty": "medium", "dax": "Units per Customer = DIVIDE ( SUM ( Sales[Quantity] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0297", "category": "ratio", "difficulty": "medium", "dax": "Gross Sales per Rep = DIVIDE ( SUM ( Sales[GrossSales] ), DISTINCTCOUNT ( Sales[SalesRepKey] ) )"}
+{"id": "rati-gen-0298", "category": "ratio", "difficulty": "medium", "dax": "Warranty Cost % = DIVIDE ( SUM ( Sales[WarrantyCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0299", "category": "ratio", "difficulty": "medium", "dax": "Rebate % of Revenue = DIVIDE ( SUM ( Sales[RebateAmount] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0300", "category": "ratio", "difficulty": "medium", "dax": "Overhead Absorption Rate = DIVIDE ( SUM ( Sales[OverheadCost] ), SUM ( Sales[TotalCost] ) )"}
+{"id": "rati-gen-0301", "category": "ratio", "difficulty": "medium", "dax": "Material Cost Ratio = DIVIDE ( SUM ( Sales[MaterialCost] ), SUM ( Sales[TotalCost] ) )"}
+{"id": "rati-gen-0302", "category": "ratio", "difficulty": "medium", "dax": "Labor Cost Ratio = DIVIDE ( SUM ( Sales[LaborCost] ), SUM ( Sales[TotalCost] ) )"}
+{"id": "rati-gen-0303", "category": "ratio", "difficulty": "medium", "dax": "Contribution Margin % = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[VariableCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0304", "category": "ratio", "difficulty": "medium", "dax": "Cancelled Order Rate = DIVIDE ( CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Cancelled\" ), COUNTROWS ( Sales ) )"}
+{"id": "rati-gen-0305", "category": "ratio", "difficulty": "medium", "dax": "Fulfilled Order Rate = DIVIDE ( CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Fulfilled\" ), COUNTROWS ( Sales ) )"}
+{"id": "rati-gen-0306", "category": "ratio", "difficulty": "medium", "dax": "Average Basket Size = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0307", "category": "ratio", "difficulty": "medium", "dax": "Revenue per Sales Day = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( 'Date'[Date] ) )"}
+{"id": "rati-gen-0308", "category": "ratio", "difficulty": "medium", "dax": "Profit per Customer = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0309", "category": "ratio", "difficulty": "medium", "dax": "Product Mix Index = DIVIDE ( DISTINCTCOUNT ( Sales[ProductKey] ), CALCULATE ( DISTINCTCOUNT ( Sales[ProductKey] ), ALL ( Sales ) ) )"}
+{"id": "rati-gen-0310", "category": "ratio", "difficulty": "medium", "dax": "Customer Penetration Rate = DIVIDE ( DISTINCTCOUNT ( Sales[CustomerKey] ), CALCULATE ( DISTINCTCOUNT ( Customer[CustomerKey] ), ALL ( Customer ) ) )"}
+{"id": "rati-gen-0311", "category": "ratio", "difficulty": "medium", "dax": "Sales to Budget Ratio = DIVIDE ( SUM ( Sales[SalesAmount] ), SUM ( Sales[BudgetAmount] ) )"}
+{"id": "rati-gen-0312", "category": "ratio", "difficulty": "medium", "dax": "Return Value % = DIVIDE ( SUM ( Sales[ReturnValue] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0313", "category": "ratio", "difficulty": "medium", "dax": "Net Margin % = DIVIDE ( SUM ( Sales[NetProfit] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0314", "category": "ratio", "difficulty": "medium", "dax": "Upsell Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[IsUpsell] = TRUE () ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0315", "category": "ratio", "difficulty": "hard", "dax": "Discount Rate = DIVIDE ( SUM ( Sales[DiscountAmount] ), SUM ( Sales[ListPrice] * Sales[Quantity] ) )"}
+{"id": "rati-gen-0316", "category": "ratio", "difficulty": "hard", "dax": "Subcategory Revenue Concentration = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product[Subcategory] ) ) )"}
+{"id": "rati-gen-0317", "category": "ratio", "difficulty": "hard", "dax": "Channel Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Sales[SalesChannel] ) ) )"}
+{"id": "rati-gen-0318", "category": "ratio", "difficulty": "hard", "dax": "Return Rate by Value = DIVIDE ( SUM ( Sales[ReturnAmount] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0319", "category": "ratio", "difficulty": "hard", "dax": "Cost per Transaction = DIVIDE ( SUM ( Sales[TotalCost] ), COUNTROWS ( Sales ) )"}
+{"id": "rati-gen-0320", "category": "ratio", "difficulty": "hard", "dax": "Freight to Revenue Ratio = DIVIDE ( SUM ( Sales[FreightCost] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0321", "category": "ratio", "difficulty": "hard", "dax": "Tax Rate Effective = DIVIDE ( SUM ( Sales[TaxAmount] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0322", "category": "ratio", "difficulty": "hard", "dax": "Online Sales Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[SalesChannel] = \"Online\" ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Sales[SalesChannel] ) ) )"}
+{"id": "rati-gen-0323", "category": "ratio", "difficulty": "hard", "dax": "Promotion Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[PromotionKey] <> 1 ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0324", "category": "ratio", "difficulty": "hard", "dax": "Average Order Value = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0325", "category": "ratio", "difficulty": "hard", "dax": "Country Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Geography[Country] ) ) )"}
+{"id": "rati-gen-0326", "category": "ratio", "difficulty": "hard", "dax": "City Revenue Concentration = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Geography[City] ) ) )"}
+{"id": "rati-gen-0327", "category": "ratio", "difficulty": "hard", "dax": "Revenue per Sales Rep = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[SalesRepKey] ) )"}
+{"id": "rati-gen-0328", "category": "ratio", "difficulty": "hard", "dax": "Gross Margin per Unit = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0329", "category": "ratio", "difficulty": "hard", "dax": "Refund Rate = DIVIDE ( COUNTROWS ( FILTER ( Sales, Sales[ReturnQuantity] > 0 ) ), COUNTROWS ( Sales ) )"}
+{"id": "rati-gen-0330", "category": "ratio", "difficulty": "hard", "dax": "Product Line Revenue Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Product[ProductLine] ) ) )"}
+{"id": "rati-gen-0331", "category": "ratio", "difficulty": "hard", "dax": "Operating Expense Ratio = DIVIDE ( SUM ( Sales[OperatingExpense] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0332", "category": "ratio", "difficulty": "hard", "dax": "Customer Lifetime Value Share = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALLEXCEPT ( Customer, Customer[CustomerKey] ) ) )"}
+{"id": "rati-gen-0333", "category": "ratio", "difficulty": "hard", "dax": "Avg Discount % per Order = DIVIDE ( SUM ( Sales[DiscountAmount] ), SUM ( Sales[SalesAmount] ) + SUM ( Sales[DiscountAmount] ) )"}
+{"id": "rati-gen-0334", "category": "ratio", "difficulty": "hard", "dax": "Revenue per Store = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Sales[StoreKey] ) )"}
+{"id": "rati-gen-0335", "category": "ratio", "difficulty": "hard", "dax": "Orders per Sales Rep = DIVIDE ( DISTINCTCOUNT ( Sales[OrderID] ), DISTINCTCOUNT ( Sales[SalesRepKey] ) )"}
+{"id": "rati-gen-0336", "category": "ratio", "difficulty": "hard", "dax": "Aged Inventory Ratio = DIVIDE ( CALCULATE ( SUM ( Sales[Quantity] ), Sales[DaysToShip] > 30 ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0337", "category": "ratio", "difficulty": "hard", "dax": "Weekend Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), 'Date'[IsWeekend] = TRUE () ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( 'Date'[IsWeekend] ) ) )"}
+{"id": "rati-gen-0338", "category": "ratio", "difficulty": "hard", "dax": "Q4 Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), 'Date'[QuarterNumber] = 4 ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( 'Date'[QuarterNumber] ) ) )"}
+{"id": "rati-gen-0339", "category": "ratio", "difficulty": "hard", "dax": "Loyalty Customer Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Customer[LoyaltyTier] = \"Gold\" ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0340", "category": "ratio", "difficulty": "hard", "dax": "Revenue Contribution vs Parent Category = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALLEXCEPT ( Product, Product[Category] ) ) )"}
+{"id": "rati-gen-0341", "category": "ratio", "difficulty": "hard", "dax": "Net Revenue Margin = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[ReturnAmount] ) - SUM ( Sales[DiscountAmount] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0342", "category": "ratio", "difficulty": "hard", "dax": "Shipping Cost per Unit = DIVIDE ( SUM ( Sales[FreightCost] ), SUM ( Sales[Quantity] ) )"}
+{"id": "rati-gen-0343", "category": "ratio", "difficulty": "hard", "dax": "High Value Order Share = DIVIDE ( CALCULATE ( DISTINCTCOUNT ( Sales[OrderID] ), Sales[SalesAmount] > 1000 ), DISTINCTCOUNT ( Sales[OrderID] ) )"}
+{"id": "rati-gen-0344", "category": "ratio", "difficulty": "hard", "dax": "Male Customer Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Customer[Gender] = \"M\" ), CALCULATE ( SUM ( Sales[SalesAmount] ), ALL ( Customer[Gender] ) ) )"}
+{"id": "rati-gen-0345", "category": "ratio", "difficulty": "hard", "dax": "Repeat Purchase Rate = DIVIDE ( CALCULATE ( DISTINCTCOUNT ( Sales[CustomerKey] ), FILTER ( Customer, CALCULATE ( COUNTROWS ( Sales ) ) > 1 ) ), DISTINCTCOUNT ( Sales[CustomerKey] ) )"}
+{"id": "rati-gen-0346", "category": "ratio", "difficulty": "hard", "dax": "Revenue per Postal Code = DIVIDE ( SUM ( Sales[SalesAmount] ), DISTINCTCOUNT ( Geography[PostalCode] ) )"}
+{"id": "rati-gen-0347", "category": "ratio", "difficulty": "hard", "dax": "Clearance Sales Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Product[IsClearance] = TRUE () ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "rati-gen-0348", "category": "ratio", "difficulty": "hard", "dax": "Direct Channel Margin Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), Sales[SalesChannel] = \"Direct\" ), SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ) )"}
+{"id": "rati-gen-0349", "category": "ratio", "difficulty": "hard", "dax": "Category Gross Margin Share = DIVIDE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), CALCULATE ( SUM ( Sales[SalesAmount] ) - SUM ( Sales[TotalCost] ), ALL ( Product[Category] ) ) )"}
+{"id": "rati-gen-0350", "category": "ratio", "difficulty": "hard", "dax": "Revenue per Active Customer = DIVIDE ( SUM ( Sales[SalesAmount] ), CALCULATE ( DISTINCTCOUNT ( Sales[CustomerKey] ), FILTER ( Customer, CALCULATE ( COUNTROWS ( Sales ) ) > 0 ) ) )"}
+{"id": "rati-gen-0351", "category": "ratio", "difficulty": "hard", "dax": "Late Shipment Revenue Share = DIVIDE ( CALCULATE ( SUM ( Sales[SalesAmount] ), Sales[DaysToShip] > Sales[PromisedDeliveryDays] ), SUM ( Sales[SalesAmount] ) )"}
+{"id": "iter-gen-0352", "category": "iterator", "difficulty": "easy", "dax": "Avg Order Value = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0353", "category": "iterator", "difficulty": "easy", "dax": "Min Line Total = MINX ( Sales, Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0354", "category": "iterator", "difficulty": "easy", "dax": "Total Discount Amount = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] )"}
+{"id": "iter-gen-0355", "category": "iterator", "difficulty": "easy", "dax": "Total Cost = SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] )"}
+{"id": "iter-gen-0356", "category": "iterator", "difficulty": "easy", "dax": "Max Units Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0357", "category": "iterator", "difficulty": "easy", "dax": "Avg Line Margin = AVERAGEX ( Sales, Sales[UnitPrice] - Sales[UnitCost] )"}
+{"id": "iter-gen-0358", "category": "iterator", "difficulty": "easy", "dax": "Total Revenue After Discount = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * ( 1 - Sales[DiscountPct] ) )"}
+{"id": "iter-gen-0359", "category": "iterator", "difficulty": "easy", "dax": "Avg Quantity Per Line = AVERAGEX ( Sales, Sales[Quantity] )"}
+{"id": "iter-gen-0360", "category": "iterator", "difficulty": "easy", "dax": "Max Sale Per Customer = MAXX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0361", "category": "iterator", "difficulty": "easy", "dax": "Total Tax Amount = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[TaxRate] )"}
+{"id": "iter-gen-0362", "category": "iterator", "difficulty": "easy", "dax": "Min Order Total = MINX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0363", "category": "iterator", "difficulty": "easy", "dax": "Avg Revenue Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0364", "category": "iterator", "difficulty": "easy", "dax": "Total Extended Cost = SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] )"}
+{"id": "iter-gen-0365", "category": "iterator", "difficulty": "easy", "dax": "Max Discount Amount Per Line = MAXX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] )"}
+{"id": "iter-gen-0366", "category": "iterator", "difficulty": "easy", "dax": "Avg Margin Per Transaction = AVERAGEX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] )"}
+{"id": "iter-gen-0367", "category": "iterator", "difficulty": "easy", "dax": "Total Freight Cost = SUMX ( Sales, Sales[Quantity] * Sales[FreightCost] )"}
+{"id": "iter-gen-0368", "category": "iterator", "difficulty": "easy", "dax": "Avg Unit Cost = AVERAGEX ( Sales, Sales[UnitCost] )"}
+{"id": "iter-gen-0369", "category": "iterator", "difficulty": "easy", "dax": "Max Quantity Per Line = MAXX ( Sales, Sales[Quantity] )"}
+{"id": "iter-gen-0370", "category": "iterator", "difficulty": "easy", "dax": "Total Net Revenue = SUMX ( Sales, ( Sales[Quantity] * Sales[UnitPrice] ) - ( Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] ) )"}
+{"id": "iter-gen-0371", "category": "iterator", "difficulty": "easy", "dax": "Avg Price Per Product = AVERAGEX ( VALUES ( Product[ProductKey] ), CALCULATE ( AVERAGEX ( Sales, Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0372", "category": "iterator", "difficulty": "easy", "dax": "Min Unit Price = MINX ( Sales, Sales[UnitPrice] )"}
+{"id": "iter-gen-0373", "category": "iterator", "difficulty": "easy", "dax": "Total Gross Profit = SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] )"}
+{"id": "iter-gen-0374", "category": "iterator", "difficulty": "easy", "dax": "Avg Lines Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( COUNTROWS ( Sales ) ) )"}
+{"id": "iter-gen-0375", "category": "iterator", "difficulty": "easy", "dax": "Max Revenue Per Product = MAXX ( VALUES ( Product[ProductKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0376", "category": "iterator", "difficulty": "easy", "dax": "Total Quantity Sold = SUMX ( Sales, Sales[Quantity] )"}
+{"id": "iter-gen-0377", "category": "iterator", "difficulty": "easy", "dax": "Avg Unit Price Sold = AVERAGEX ( Sales, Sales[UnitPrice] )"}
+{"id": "iter-gen-0378", "category": "iterator", "difficulty": "easy", "dax": "Total Order Value Incl Tax = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * ( 1 + Sales[TaxRate] ) )"}
+{"id": "iter-gen-0379", "category": "iterator", "difficulty": "easy", "dax": "Min Margin Per Line = MINX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] )"}
+{"id": "iter-gen-0380", "category": "iterator", "difficulty": "easy", "dax": "Avg Cost Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0381", "category": "iterator", "difficulty": "easy", "dax": "Max Lines Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( COUNTROWS ( Sales ) ) )"}
+{"id": "iter-gen-0382", "category": "iterator", "difficulty": "easy", "dax": "Total Profit After Freight = SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] - Sales[FreightCost] )"}
+{"id": "iter-gen-0383", "category": "iterator", "difficulty": "easy", "dax": "Avg Discount Per Line = AVERAGEX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] )"}
+{"id": "iter-gen-0384", "category": "iterator", "difficulty": "easy", "dax": "Min Revenue Per Customer = MINX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0385", "category": "iterator", "difficulty": "easy", "dax": "Total Revenue Per Region = SUMX ( VALUES ( Geography[Region] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0386", "category": "iterator", "difficulty": "easy", "dax": "Avg Freight Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[FreightCost] ) ) )"}
+{"id": "iter-gen-0387", "category": "iterator", "difficulty": "easy", "dax": "Max Cost Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0388", "category": "iterator", "difficulty": "easy", "dax": "Total Margin After Tax = SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] * ( 1 - Sales[TaxRate] ) )"}
+{"id": "iter-gen-0389", "category": "iterator", "difficulty": "easy", "dax": "Avg Revenue Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0390", "category": "iterator", "difficulty": "easy", "dax": "Min Cost Per Line = MINX ( Sales, Sales[Quantity] * Sales[UnitCost] )"}
+{"id": "iter-gen-0391", "category": "iterator", "difficulty": "easy", "dax": "Total Sales Qty By Product = SUMX ( VALUES ( Product[ProductKey] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0392", "category": "iterator", "difficulty": "easy", "dax": "Max Profit Per Customer = MAXX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0393", "category": "iterator", "difficulty": "easy", "dax": "Avg Tax Per Line = AVERAGEX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[TaxRate] )"}
+{"id": "iter-gen-0394", "category": "iterator", "difficulty": "easy", "dax": "Total Revenue Per Category = SUMX ( VALUES ( Product[Category] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0395", "category": "iterator", "difficulty": "easy", "dax": "Min Quantity Per Order = MINX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0396", "category": "iterator", "difficulty": "medium", "dax": "Avg Margin Per Line = AVERAGEX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] )"}
+{"id": "iter-gen-0397", "category": "iterator", "difficulty": "medium", "dax": "Total Net Revenue = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * ( 1 - Sales[DiscountPct] ) )"}
+{"id": "iter-gen-0398", "category": "iterator", "difficulty": "medium", "dax": "Max Revenue Per Customer = MAXX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0399", "category": "iterator", "difficulty": "medium", "dax": "Avg Discount Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] ) ) )"}
+{"id": "iter-gen-0400", "category": "iterator", "difficulty": "medium", "dax": "Max Profit Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0401", "category": "iterator", "difficulty": "medium", "dax": "Total Tax Collected = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[TaxRate] )"}
+{"id": "iter-gen-0402", "category": "iterator", "difficulty": "medium", "dax": "Avg Quantity Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0403", "category": "iterator", "difficulty": "medium", "dax": "Min Order Value = MINX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0404", "category": "iterator", "difficulty": "medium", "dax": "Total Net Profit = SUMX ( Sales, ( Sales[UnitPrice] * ( 1 - Sales[DiscountPct] ) - Sales[UnitCost] ) * Sales[Quantity] )"}
+{"id": "iter-gen-0405", "category": "iterator", "difficulty": "medium", "dax": "Avg Revenue Per Product = AVERAGEX ( VALUES ( Product[ProductKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0406", "category": "iterator", "difficulty": "medium", "dax": "Max Units Per Customer = MAXX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0407", "category": "iterator", "difficulty": "medium", "dax": "Total Freight Weighted By Qty = SUMX ( Sales, Sales[FreightCost] * Sales[Quantity] / CALCULATE ( SUM ( Sales[Quantity] ), ALL ( Sales ) ) )"}
+{"id": "iter-gen-0408", "category": "iterator", "difficulty": "medium", "dax": "Orders With Discount = COUNTROWS ( FILTER ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[DiscountPct] ) ) > 0 ) )"}
+{"id": "iter-gen-0409", "category": "iterator", "difficulty": "medium", "dax": "Avg Unit Price By Category = AVERAGEX ( VALUES ( Product[Category] ), CALCULATE ( AVERAGE ( Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0410", "category": "iterator", "difficulty": "medium", "dax": "Total Revenue By City = SUMX ( VALUES ( Geography[City] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0411", "category": "iterator", "difficulty": "medium", "dax": "Max Freight Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[FreightCost] ) ) )"}
+{"id": "iter-gen-0412", "category": "iterator", "difficulty": "medium", "dax": "Avg Gross Profit Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0413", "category": "iterator", "difficulty": "medium", "dax": "Total Sales Tax = SUMX ( Sales, Sales[UnitPrice] * Sales[Quantity] * Sales[TaxRate] * ( 1 - Sales[DiscountPct] ) )"}
+{"id": "iter-gen-0414", "category": "iterator", "difficulty": "medium", "dax": "Min Units Per Order = MINX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0415", "category": "iterator", "difficulty": "medium", "dax": "Avg Net Revenue Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * ( 1 - Sales[DiscountPct] ) ) ) )"}
+{"id": "iter-gen-0416", "category": "iterator", "difficulty": "medium", "dax": "Products With Sales = COUNTROWS ( FILTER ( VALUES ( Product[ProductKey] ), CALCULATE ( COUNTROWS ( Sales ) ) > 0 ) )"}
+{"id": "iter-gen-0417", "category": "iterator", "difficulty": "medium", "dax": "Total Margin After Tax = SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] - Sales[UnitPrice] * Sales[Quantity] * Sales[TaxRate] )"}
+{"id": "iter-gen-0418", "category": "iterator", "difficulty": "medium", "dax": "Avg Lines Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( COUNTROWS ( Sales ) ) )"}
+{"id": "iter-gen-0419", "category": "iterator", "difficulty": "medium", "dax": "Total Discounted Line Value = SUMX ( FILTER ( Sales, Sales[DiscountPct] > 0 ), Sales[Quantity] * Sales[UnitPrice] * ( 1 - Sales[DiscountPct] ) )"}
+{"id": "iter-gen-0420", "category": "iterator", "difficulty": "medium", "dax": "Avg Freight Per Line = AVERAGEX ( Sales, Sales[FreightCost] )"}
+{"id": "iter-gen-0421", "category": "iterator", "difficulty": "medium", "dax": "Total Revenue High Margin Lines = SUMX ( FILTER ( Sales, Sales[UnitPrice] - Sales[UnitCost] > 50 ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0422", "category": "iterator", "difficulty": "medium", "dax": "Min Profit Per Customer = MINX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0423", "category": "iterator", "difficulty": "medium", "dax": "Avg Revenue Per Geography = AVERAGEX ( VALUES ( Geography[CountryRegion] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0424", "category": "iterator", "difficulty": "medium", "dax": "Total Cost High Volume Lines = SUMX ( FILTER ( Sales, Sales[Quantity] > 10 ), Sales[Quantity] * Sales[UnitCost] )"}
+{"id": "iter-gen-0425", "category": "iterator", "difficulty": "medium", "dax": "Max Lines Per Customer = MAXX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( COUNTROWS ( Sales ) ) )"}
+{"id": "iter-gen-0426", "category": "iterator", "difficulty": "medium", "dax": "Avg Discount Amount Per Line = AVERAGEX ( Sales, Sales[UnitPrice] * Sales[Quantity] * Sales[DiscountPct] )"}
+{"id": "iter-gen-0427", "category": "iterator", "difficulty": "medium", "dax": "Total Revenue Per Salesperson = SUMX ( VALUES ( Sales[SalespersonKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0428", "category": "iterator", "difficulty": "medium", "dax": "Min Cost Per Product = MINX ( VALUES ( Product[ProductKey] ), CALCULATE ( AVERAGE ( Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0429", "category": "iterator", "difficulty": "medium", "dax": "Avg Orders Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( DISTINCTCOUNT ( Sales[OrderNumber] ) ) )"}
+{"id": "iter-gen-0430", "category": "iterator", "difficulty": "medium", "dax": "Total Extended Price Net = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] - Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] - Sales[FreightCost] )"}
+{"id": "iter-gen-0431", "category": "iterator", "difficulty": "medium", "dax": "Max Discount Amount Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[DiscountPct] ) ) )"}
+{"id": "iter-gen-0432", "category": "iterator", "difficulty": "medium", "dax": "Avg Cost Per Product = AVERAGEX ( VALUES ( Product[ProductKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0433", "category": "iterator", "difficulty": "medium", "dax": "Total Revenue Positive Margin = SUMX ( FILTER ( Sales, Sales[UnitPrice] > Sales[UnitCost] ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0434", "category": "iterator", "difficulty": "medium", "dax": "Min Revenue Per Geography = MINX ( VALUES ( Geography[CountryRegion] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0435", "category": "iterator", "difficulty": "medium", "dax": "Avg Tax Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * Sales[TaxRate] ) ) )"}
+{"id": "rank-gen-0436", "category": "ranking", "difficulty": "easy", "dax": "City Rank by Revenue = RANKX ( ALL ( 'Geography'[City] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0437", "category": "ranking", "difficulty": "easy", "dax": "Country Rank by Sales = RANKX ( ALL ( 'Geography'[Country] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0438", "category": "ranking", "difficulty": "easy", "dax": "Product Rank by Quantity = RANKX ( ALL ( Product[ProductName] ), [Total Quantity], , DESC )"}
+{"id": "rank-gen-0439", "category": "ranking", "difficulty": "easy", "dax": "Customer Rank by Profit = RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0440", "category": "ranking", "difficulty": "easy", "dax": "Category Rank by Sales = RANKX ( ALL ( Product[Category] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0441", "category": "ranking", "difficulty": "easy", "dax": "Subcategory Rank by Revenue = RANKX ( ALL ( Product[Subcategory] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0442", "category": "ranking", "difficulty": "easy", "dax": "Sales Rep Rank = RANKX ( ALL ( Sales[SalesRepName] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0443", "category": "ranking", "difficulty": "easy", "dax": "Product Rank by Margin = RANKX ( ALL ( Product[ProductName] ), [Total Profit], , DESC )"}
+{"id": "rank-gen-0444", "category": "ranking", "difficulty": "easy", "dax": "Region Rank by Quantity = RANKX ( ALL ( 'Geography'[Region] ), [Total Quantity], , DESC )"}
+{"id": "rank-gen-0445", "category": "ranking", "difficulty": "easy", "dax": "Is Top 5 Customer = IF ( RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0446", "category": "ranking", "difficulty": "easy", "dax": "Is Top 20 Product = IF ( [Product Rank by Sales] <= 20, 1, 0 )"}
+{"id": "rank-gen-0447", "category": "ranking", "difficulty": "easy", "dax": "Top 3 Categories Sales = CALCULATE ( [Total Sales], TOPN ( 3, ALL ( Product[Category] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0448", "category": "ranking", "difficulty": "easy", "dax": "Top 10 Customers Sales = CALCULATE ( [Total Sales], TOPN ( 10, ALL ( Customer[CustomerName] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0449", "category": "ranking", "difficulty": "easy", "dax": "Top 5 Regions Sales = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( 'Geography'[Region] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0450", "category": "ranking", "difficulty": "easy", "dax": "Customer Rank by Orders = RANKX ( ALL ( Customer[CustomerName] ), [Order Count], , DESC, DENSE )"}
+{"id": "rank-gen-0451", "category": "ranking", "difficulty": "easy", "dax": "Product Rank by Orders = RANKX ( ALL ( Product[ProductName] ), [Order Count], , DESC )"}
+{"id": "rank-gen-0452", "category": "ranking", "difficulty": "easy", "dax": "Store Rank by Sales = RANKX ( ALL ( 'Geography'[StoreCity] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0453", "category": "ranking", "difficulty": "easy", "dax": "Brand Rank by Revenue = RANKX ( ALL ( Product[Brand] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0454", "category": "ranking", "difficulty": "easy", "dax": "Is Top 3 Category = IF ( RANKX ( ALL ( Product[Category] ), [Total Sales], , DESC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0455", "category": "ranking", "difficulty": "easy", "dax": "Is Top 5 Region = IF ( RANKX ( ALL ( 'Geography'[Region] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0456", "category": "ranking", "difficulty": "easy", "dax": "Salesperson Rank by Orders = RANKX ( ALL ( Sales[SalesRepName] ), [Order Count], , DESC, DENSE )"}
+{"id": "rank-gen-0457", "category": "ranking", "difficulty": "easy", "dax": "Product Rank by Avg Price = RANKX ( ALL ( Product[ProductName] ), [Avg Unit Price], , DESC )"}
+{"id": "rank-gen-0458", "category": "ranking", "difficulty": "easy", "dax": "Customer Rank by Avg Order = RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Avg Order Value], , DESC )"}
+{"id": "rank-gen-0459", "category": "ranking", "difficulty": "easy", "dax": "Top 10 Products Quantity = CALCULATE ( [Total Quantity], TOPN ( 10, ALL ( Product[ProductName] ), [Total Quantity], DESC ) )"}
+{"id": "rank-gen-0460", "category": "ranking", "difficulty": "easy", "dax": "Top 5 Customers Profit = CALCULATE ( [Total Profit], TOPN ( 5, ALL ( Customer[CustomerName] ), [Total Profit], DESC ) )"}
+{"id": "rank-gen-0461", "category": "ranking", "difficulty": "easy", "dax": "Segment Rank by Sales = RANKX ( ALL ( Customer[Segment] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0462", "category": "ranking", "difficulty": "easy", "dax": "Channel Rank by Revenue = RANKX ( ALL ( Sales[SalesChannel] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0463", "category": "ranking", "difficulty": "easy", "dax": "Is Bottom 10 Product = IF ( RANKX ( ALL ( Product[ProductName] ), [Total Sales], , ASC ) <= 10, 1, 0 )"}
+{"id": "rank-gen-0464", "category": "ranking", "difficulty": "easy", "dax": "Is Top 1 Product = IF ( RANKX ( ALL ( Product[ProductName] ), [Total Sales], , DESC ) = 1, 1, 0 )"}
+{"id": "rank-gen-0465", "category": "ranking", "difficulty": "easy", "dax": "City Rank by Orders = RANKX ( ALL ( 'Geography'[City] ), [Order Count], , DESC )"}
+{"id": "rank-gen-0466", "category": "ranking", "difficulty": "easy", "dax": "Country Rank by Customers = RANKX ( ALL ( 'Geography'[Country] ), DISTINCTCOUNT ( Sales[CustomerKey] ), , DESC )"}
+{"id": "rank-gen-0467", "category": "ranking", "difficulty": "easy", "dax": "Product Rank by Revenue Dense = RANKX ( ALLSELECTED ( Product[ProductName] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0468", "category": "ranking", "difficulty": "easy", "dax": "Top 3 Brands Sales = CALCULATE ( [Total Sales], TOPN ( 3, ALL ( Product[Brand] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0469", "category": "ranking", "difficulty": "easy", "dax": "Top 5 Subcategory Sales = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Product[Subcategory] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0470", "category": "ranking", "difficulty": "easy", "dax": "Is Top 5 Brand = IF ( RANKX ( ALL ( Product[Brand] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0471", "category": "ranking", "difficulty": "easy", "dax": "Is Top 10 Customer = IF ( RANKX ( ALL ( Customer[CustomerName] ), [Total Sales], , DESC ) <= 10, 1, 0 )"}
+{"id": "rank-gen-0472", "category": "ranking", "difficulty": "easy", "dax": "State Rank by Sales = RANKX ( ALL ( 'Geography'[State] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0473", "category": "ranking", "difficulty": "easy", "dax": "Postal Code Rank by Revenue = RANKX ( ALL ( 'Geography'[PostalCode] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0474", "category": "ranking", "difficulty": "easy", "dax": "Product Color Rank by Sales = RANKX ( ALL ( Product[Color] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0475", "category": "ranking", "difficulty": "easy", "dax": "Customer Tier Rank = RANKX ( ALL ( Customer[CustomerTier] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0476", "category": "ranking", "difficulty": "easy", "dax": "Top 5 Sales Reps Sales = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Sales[SalesRepName] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0477", "category": "ranking", "difficulty": "easy", "dax": "Is Top 3 Sales Rep = IF ( RANKX ( ALL ( Sales[SalesRepName] ), [Total Sales], , DESC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0478", "category": "ranking", "difficulty": "easy", "dax": "Product Size Rank by Quantity = RANKX ( ALL ( Product[Size] ), [Total Quantity], , DESC )"}
+{"id": "rank-gen-0479", "category": "ranking", "difficulty": "easy", "dax": "Region Rank by Profit = RANKX ( ALL ( 'Geography'[Region] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0480", "category": "ranking", "difficulty": "medium", "dax": "City Rank by Sales = RANKX ( ALL ( Geography[City] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0481", "category": "ranking", "difficulty": "medium", "dax": "Country Rank by Profit = RANKX ( ALL ( Geography[Country] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0482", "category": "ranking", "difficulty": "medium", "dax": "State Rank by Revenue = RANKX ( ALLSELECTED ( Geography[State] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0483", "category": "ranking", "difficulty": "medium", "dax": "Region Rank by Quantity = RANKX ( ALL ( Geography[Region] ), [Total Quantity], , DESC, DENSE )"}
+{"id": "rank-gen-0484", "category": "ranking", "difficulty": "medium", "dax": "Category Rank by Sales = RANKX ( ALL ( Product[Category] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0485", "category": "ranking", "difficulty": "medium", "dax": "Subcategory Rank by Profit = RANKX ( ALLSELECTED ( Product[Subcategory] ), [Total Profit], , DESC )"}
+{"id": "rank-gen-0486", "category": "ranking", "difficulty": "medium", "dax": "Sales Rep Rank by Revenue = RANKX ( ALL ( Sales[SalesRepName] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0487", "category": "ranking", "difficulty": "medium", "dax": "Product Rank by Margin = RANKX ( ALL ( Product[ProductName] ), [Profit Margin %], , DESC, DENSE )"}
+{"id": "rank-gen-0488", "category": "ranking", "difficulty": "medium", "dax": "Channel Rank by Sales = RANKX ( ALL ( Sales[SalesChannel] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0489", "category": "ranking", "difficulty": "medium", "dax": "Is Top 5 City = IF ( RANKX ( ALL ( Geography[City] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0490", "category": "ranking", "difficulty": "medium", "dax": "Is Top 5 Category = IF ( RANKX ( ALL ( Product[Category] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0491", "category": "ranking", "difficulty": "medium", "dax": "Is Bottom 5 Subcategory = IF ( RANKX ( ALL ( Product[Subcategory] ), [Total Sales], , ASC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0492", "category": "ranking", "difficulty": "medium", "dax": "Is Top 3 Regions by Profit = IF ( RANKX ( ALL ( Geography[Region] ), [Total Profit], , DESC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0493", "category": "ranking", "difficulty": "medium", "dax": "Is Top 5 Sales Rep by Profit = IF ( RANKX ( ALL ( Sales[SalesRepName] ), [Total Profit], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0494", "category": "ranking", "difficulty": "medium", "dax": "Is Bottom 3 Brand by Margin = IF ( RANKX ( ALL ( Product[Brand] ), [Profit Margin %], , ASC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0495", "category": "ranking", "difficulty": "medium", "dax": "Is Top 10 Product by Margin = IF ( RANKX ( ALL ( Product[ProductName] ), [Profit Margin %], , DESC ) <= 10, 1, 0 )"}
+{"id": "rank-gen-0496", "category": "ranking", "difficulty": "medium", "dax": "Top 3 Categories Profit = CALCULATE ( [Total Profit], TOPN ( 3, ALL ( Product[Category] ), [Total Profit], DESC ) )"}
+{"id": "rank-gen-0497", "category": "ranking", "difficulty": "medium", "dax": "Top 5 Cities Revenue = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Geography[City] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0498", "category": "ranking", "difficulty": "medium", "dax": "Top 3 Regions Profit = CALCULATE ( [Total Profit], TOPN ( 3, ALL ( Geography[Region] ), [Total Profit], DESC ) )"}
+{"id": "rank-gen-0499", "category": "ranking", "difficulty": "medium", "dax": "Top 5 Sales Reps Profit = CALCULATE ( [Total Profit], TOPN ( 5, ALL ( Sales[SalesRepName] ), [Total Profit], DESC ) )"}
+{"id": "rank-gen-0500", "category": "ranking", "difficulty": "medium", "dax": "Top 10 Products by Quantity = CALCULATE ( [Total Quantity], TOPN ( 10, ALL ( Product[ProductName] ), [Total Quantity], DESC ) )"}
+{"id": "rank-gen-0501", "category": "ranking", "difficulty": "medium", "dax": "Top 5 Subcategories Quantity = CALCULATE ( [Total Quantity], TOPN ( 5, ALL ( Product[Subcategory] ), [Total Quantity], DESC ) )"}
+{"id": "rank-gen-0502", "category": "ranking", "difficulty": "medium", "dax": "Top 3 Channels by Sales = CALCULATE ( [Total Sales], TOPN ( 3, ALL ( Sales[SalesChannel] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0503", "category": "ranking", "difficulty": "medium", "dax": "Month Rank by Sales = RANKX ( ALL ( 'Date'[MonthName] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0504", "category": "ranking", "difficulty": "medium", "dax": "Quarter Rank by Revenue = RANKX ( ALL ( 'Date'[Quarter] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0505", "category": "ranking", "difficulty": "medium", "dax": "Year Rank by Profit = RANKX ( ALL ( 'Date'[Year] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0506", "category": "ranking", "difficulty": "medium", "dax": "Customer Segment Rank by Sales = RANKX ( ALL ( Customer[Segment] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0507", "category": "ranking", "difficulty": "medium", "dax": "Product Color Rank by Revenue = RANKX ( ALL ( Product[Color] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0508", "category": "ranking", "difficulty": "medium", "dax": "Sales Rep Rank by Order Count = RANKX ( ALLSELECTED ( Sales[SalesRepName] ), [Order Count], , DESC, DENSE )"}
+{"id": "rank-gen-0509", "category": "ranking", "difficulty": "medium", "dax": "Brand Rank by Quantity = RANKX ( ALL ( Product[Brand] ), [Total Quantity], , DESC, DENSE )"}
+{"id": "rank-gen-0510", "category": "ranking", "difficulty": "medium", "dax": "City Rank by Profit Within Country = RANKX ( ALLEXCEPT ( Geography, Geography[Country] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0511", "category": "ranking", "difficulty": "medium", "dax": "Product Rank by Sales Within Category = RANKX ( ALLEXCEPT ( Product, Product[Category] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0512", "category": "ranking", "difficulty": "medium", "dax": "Customer Rank by Sales Within Segment = RANKX ( ALLEXCEPT ( Customer, Customer[Segment] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0513", "category": "ranking", "difficulty": "medium", "dax": "Subcategory Rank Within Category = RANKX ( ALLEXCEPT ( Product, Product[Category] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0514", "category": "ranking", "difficulty": "medium", "dax": "Is Top 5 Product Within Category = IF ( RANKX ( ALLEXCEPT ( Product, Product[Category] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0515", "category": "ranking", "difficulty": "medium", "dax": "Is Top 3 Customer Within Segment = IF ( RANKX ( ALLEXCEPT ( Customer, Customer[Segment] ), [Total Sales], , DESC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0516", "category": "ranking", "difficulty": "medium", "dax": "Percentile Rank Customer by Sales = DIVIDE ( RANKX ( ALL ( Customer[CustomerName] ), [Total Sales], , ASC ), COUNTROWS ( ALL ( Customer[CustomerName] ) ) )"}
+{"id": "rank-gen-0517", "category": "ranking", "difficulty": "medium", "dax": "Product Rank by Avg Unit Price = RANKX ( ALL ( Product[ProductName] ), [Avg Unit Price], , DESC, DENSE )"}
+{"id": "rank-gen-0518", "category": "ranking", "difficulty": "medium", "dax": "Customer Rank by Lifetime Value = RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0519", "category": "ranking", "difficulty": "medium", "dax": "Sales Territory Rank by Revenue = RANKX ( ALL ( Sales[Territory] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0520", "category": "ranking", "difficulty": "hard", "dax": "Product Rank by Profit Within Category = RANKX ( ALLEXCEPT ( Product, Product[Category] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0521", "category": "ranking", "difficulty": "hard", "dax": "Region Rank by Revenue = RANKX ( ALL ( 'Geography'[Region] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0522", "category": "ranking", "difficulty": "hard", "dax": "Is Top 10 Customer by Orders = IF ( RANKX ( ALL ( Customer[CustomerName] ), [Order Count], , DESC ) <= 10, 1, 0 )"}
+{"id": "rank-gen-0523", "category": "ranking", "difficulty": "hard", "dax": "Subcategory Rank by Margin = RANKX ( ALL ( Product[Subcategory] ), [Profit Margin %], , DESC, DENSE )"}
+{"id": "rank-gen-0524", "category": "ranking", "difficulty": "hard", "dax": "Top 3 Regions Revenue = CALCULATE ( [Total Sales], TOPN ( 3, ALL ( 'Geography'[Region] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0525", "category": "ranking", "difficulty": "hard", "dax": "Country Rank by Profit = RANKX ( ALL ( 'Geography'[Country] ), [Total Profit], , DESC )"}
+{"id": "rank-gen-0526", "category": "ranking", "difficulty": "hard", "dax": "Is Top 5 Subcategory by Margin = IF ( RANKX ( ALL ( Product[Subcategory] ), [Profit Margin %], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0527", "category": "ranking", "difficulty": "hard", "dax": "Product Rank by Revenue Within Subcategory = RANKX ( ALLEXCEPT ( Product, Product[Subcategory] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0528", "category": "ranking", "difficulty": "hard", "dax": "Top 10 Customers by Orders = CALCULATE ( [Order Count], TOPN ( 10, ALL ( Customer[CustomerName] ), [Order Count], DESC ) )"}
+{"id": "rank-gen-0529", "category": "ranking", "difficulty": "hard", "dax": "Sales Rep Rank by Profit = RANKX ( ALL ( Sales[SalesRepName] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0530", "category": "ranking", "difficulty": "hard", "dax": "Is Bottom 5 Product by Profit = IF ( RANKX ( ALL ( Product[ProductName] ), [Total Profit], , ASC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0531", "category": "ranking", "difficulty": "hard", "dax": "Customer Rank by Profit Within Region = RANKX ( ALLEXCEPT ( Customer, 'Geography'[Region] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0532", "category": "ranking", "difficulty": "hard", "dax": "Brand Rank by Revenue = RANKX ( ALL ( Product[Brand] ), [Total Sales], , DESC )"}
+{"id": "rank-gen-0533", "category": "ranking", "difficulty": "hard", "dax": "Top 5 Subcategories by Sales = CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Product[Subcategory] ), [Total Sales], DESC ) )"}
+{"id": "rank-gen-0534", "category": "ranking", "difficulty": "hard", "dax": "State Rank by Sales Within Country = RANKX ( ALLEXCEPT ( 'Geography', 'Geography'[Country] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0535", "category": "ranking", "difficulty": "hard", "dax": "Is Top 3 Brand by Revenue = IF ( RANKX ( ALL ( Product[Brand] ), [Total Sales], , DESC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0536", "category": "ranking", "difficulty": "hard", "dax": "Product Percentile Rank by Sales = DIVIDE ( RANKX ( ALL ( Product[ProductName] ), [Total Sales], , ASC ), COUNTROWS ( ALL ( Product[ProductName] ) ) )"}
+{"id": "rank-gen-0537", "category": "ranking", "difficulty": "hard", "dax": "City Rank by Profit Within State = RANKX ( ALLEXCEPT ( 'Geography', 'Geography'[State] ), [Total Profit], , DESC, DENSE )"}
+{"id": "rank-gen-0538", "category": "ranking", "difficulty": "hard", "dax": "Top 5 Brands by Quantity = CALCULATE ( [Total Quantity], TOPN ( 5, ALL ( Product[Brand] ), [Total Quantity], DESC ) )"}
+{"id": "rank-gen-0539", "category": "ranking", "difficulty": "hard", "dax": "Is Bottom 10 Customer by Sales = IF ( RANKX ( ALLSELECTED ( Customer[CustomerName] ), [Total Sales], , ASC ) <= 10, 1, 0 )"}
+{"id": "rank-gen-0540", "category": "ranking", "difficulty": "hard", "dax": "Monthly Sales Rank = RANKX ( ALL ( 'Date'[YearMonth] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0541", "category": "ranking", "difficulty": "hard", "dax": "Top 3 Products by Margin Within Category = CALCULATE ( [Total Profit], TOPN ( 3, ALLEXCEPT ( Product, Product[Category] ), [Profit Margin %], DESC ) )"}
+{"id": "rank-gen-0542", "category": "ranking", "difficulty": "hard", "dax": "Customer Rank by Quantity Ordered = RANKX ( ALL ( Customer[CustomerName] ), [Total Quantity], , DESC, DENSE )"}
+{"id": "rank-gen-0543", "category": "ranking", "difficulty": "hard", "dax": "Is Top N Product by Sales = IF ( RANKX ( ALLSELECTED ( Product[ProductName] ), [Total Sales], , DESC ) <= [Top N Parameter], 1, 0 )"}
+{"id": "rank-gen-0544", "category": "ranking", "difficulty": "hard", "dax": "Sales Rep Rank Within Region = RANKX ( ALLEXCEPT ( Sales, 'Geography'[Region] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0545", "category": "ranking", "difficulty": "hard", "dax": "Quarterly Rank by Revenue = RANKX ( ALL ( 'Date'[YearQuarter] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0546", "category": "ranking", "difficulty": "hard", "dax": "Is Top 5 City by Orders = IF ( RANKX ( ALL ( 'Geography'[City] ), [Order Count], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0547", "category": "ranking", "difficulty": "hard", "dax": "Top 5 Countries by Profit = CALCULATE ( [Total Profit], TOPN ( 5, ALL ( 'Geography'[Country] ), [Total Profit], DESC ) )"}
+{"id": "rank-gen-0548", "category": "ranking", "difficulty": "hard", "dax": "Product Rank by Average Unit Price = RANKX ( ALL ( Product[ProductName] ), DIVIDE ( [Total Sales], [Total Quantity] ), , DESC, DENSE )"}
+{"id": "rank-gen-0549", "category": "ranking", "difficulty": "hard", "dax": "Is Bottom 3 Subcategory by Sales = IF ( RANKX ( ALL ( Product[Subcategory] ), [Total Sales], , ASC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0550", "category": "ranking", "difficulty": "hard", "dax": "Top 3 Sales Reps by Orders = CALCULATE ( [Order Count], TOPN ( 3, ALL ( Sales[SalesRepName] ), [Order Count], DESC ) )"}
+{"id": "rank-gen-0551", "category": "ranking", "difficulty": "hard", "dax": "Customer Segment Rank Within Country = RANKX ( ALLEXCEPT ( Customer, 'Geography'[Country] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0552", "category": "ranking", "difficulty": "hard", "dax": "Brand Rank by Profit Margin = RANKX ( ALL ( Product[Brand] ), [Profit Margin %], , DESC, DENSE )"}
+{"id": "rank-gen-0553", "category": "ranking", "difficulty": "hard", "dax": "Is Top 5 State by Revenue = IF ( RANKX ( ALL ( 'Geography'[State] ), [Total Sales], , DESC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0554", "category": "ranking", "difficulty": "hard", "dax": "Top 10 Products by Profit = CALCULATE ( [Total Profit], TOPN ( 10, ALL ( Product[ProductName] ), [Total Profit], DESC ) )"}
+{"id": "rank-gen-0555", "category": "ranking", "difficulty": "hard", "dax": "Product Rank by Return Rate = RANKX ( ALL ( Product[ProductName] ), [Return Rate %], , ASC, DENSE )"}
+{"id": "rank-gen-0556", "category": "ranking", "difficulty": "hard", "dax": "Is Top 3 Region by Orders = IF ( RANKX ( ALL ( 'Geography'[Region] ), [Order Count], , DESC ) <= 3, 1, 0 )"}
+{"id": "rank-gen-0557", "category": "ranking", "difficulty": "hard", "dax": "Top N Customers Revenue Share = DIVIDE ( CALCULATE ( [Total Sales], TOPN ( [Top N Parameter], ALL ( Customer[CustomerName] ), [Total Sales], DESC ) ), CALCULATE ( [Total Sales], ALL ( Customer ) ) )"}
+{"id": "rank-gen-0558", "category": "ranking", "difficulty": "hard", "dax": "Sales Channel Rank by Revenue = RANKX ( ALL ( Sales[Channel] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0559", "category": "ranking", "difficulty": "hard", "dax": "Is Bottom 5 Brand by Orders = IF ( RANKX ( ALL ( Product[Brand] ), [Order Count], , ASC ) <= 5, 1, 0 )"}
+{"id": "rank-gen-0560", "category": "ranking", "difficulty": "hard", "dax": "Product Rank by Sales Within Brand = RANKX ( ALLEXCEPT ( Product, Product[Brand] ), [Total Sales], , DESC, DENSE )"}
+{"id": "rank-gen-0561", "category": "ranking", "difficulty": "hard", "dax": "Top 5 Products Revenue Share = DIVIDE ( CALCULATE ( [Total Sales], TOPN ( 5, ALL ( Product[ProductName] ), [Total Sales], DESC ) ), CALCULATE ( [Total Sales], ALL ( Product ) ) )"}
+{"id": "rank-gen-0562", "category": "ranking", "difficulty": "hard", "dax": "Is Top 3 Sales Rep by Margin = IF ( RANKX ( ALL ( Sales[SalesRepName] ), [Profit Margin %], , DESC ) <= 3, 1, 0 )"}
+{"id": "filt-gen-0563", "category": "filter_context", "difficulty": "easy", "dax": "Store Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Store\" )"}
+{"id": "filt-gen-0564", "category": "filter_context", "difficulty": "easy", "dax": "Wholesale Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Wholesale\" )"}
+{"id": "filt-gen-0565", "category": "filter_context", "difficulty": "easy", "dax": "Completed Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Completed\" )"}
+{"id": "filt-gen-0566", "category": "filter_context", "difficulty": "easy", "dax": "Pending Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Pending\" )"}
+{"id": "filt-gen-0567", "category": "filter_context", "difficulty": "easy", "dax": "Cancelled Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Cancelled\" )"}
+{"id": "filt-gen-0568", "category": "filter_context", "difficulty": "easy", "dax": "Sales All Regions = CALCULATE ( [Total Sales], ALL ( Geography ) )"}
+{"id": "filt-gen-0569", "category": "filter_context", "difficulty": "easy", "dax": "Sales All Dates = CALCULATE ( [Total Sales], ALL ( 'Date' ) )"}
+{"id": "filt-gen-0570", "category": "filter_context", "difficulty": "easy", "dax": "Sales All Customers = CALCULATE ( [Total Sales], ALL ( Customer ) )"}
+{"id": "filt-gen-0571", "category": "filter_context", "difficulty": "easy", "dax": "Sales All Categories = CALCULATE ( [Total Sales], ALL ( Product[Category] ) )"}
+{"id": "filt-gen-0572", "category": "filter_context", "difficulty": "easy", "dax": "Sales Excl Discounted = CALCULATE ( [Total Sales], Sales[DiscountPct] = 0 )"}
+{"id": "filt-gen-0573", "category": "filter_context", "difficulty": "easy", "dax": "Sales Discounted Only = CALCULATE ( [Total Sales], Sales[DiscountPct] > 0 )"}
+{"id": "filt-gen-0574", "category": "filter_context", "difficulty": "easy", "dax": "Sales High Value Orders = CALCULATE ( [Total Sales], Sales[OrderAmount] > 5000 )"}
+{"id": "filt-gen-0575", "category": "filter_context", "difficulty": "easy", "dax": "Sales Low Value Orders = CALCULATE ( [Total Sales], Sales[OrderAmount] <= 100 )"}
+{"id": "filt-gen-0576", "category": "filter_context", "difficulty": "easy", "dax": "New Customer Sales = CALCULATE ( [Total Sales], Customer[CustomerType] = \"New\" )"}
+{"id": "filt-gen-0577", "category": "filter_context", "difficulty": "easy", "dax": "Returning Customer Sales = CALCULATE ( [Total Sales], Customer[CustomerType] = \"Returning\" )"}
+{"id": "filt-gen-0578", "category": "filter_context", "difficulty": "easy", "dax": "Domestic Sales = CALCULATE ( [Total Sales], Geography[Country] = \"United States\" )"}
+{"id": "filt-gen-0579", "category": "filter_context", "difficulty": "easy", "dax": "International Sales = CALCULATE ( [Total Sales], Geography[Country] <> \"United States\" )"}
+{"id": "filt-gen-0580", "category": "filter_context", "difficulty": "easy", "dax": "Electronics Sales = CALCULATE ( [Total Sales], Product[Category] = \"Electronics\" )"}
+{"id": "filt-gen-0581", "category": "filter_context", "difficulty": "easy", "dax": "Clothing Sales = CALCULATE ( [Total Sales], Product[Category] = \"Clothing\" )"}
+{"id": "filt-gen-0582", "category": "filter_context", "difficulty": "easy", "dax": "Food Sales = CALCULATE ( [Total Sales], Product[Category] = \"Food\" )"}
+{"id": "filt-gen-0583", "category": "filter_context", "difficulty": "easy", "dax": "Weekend Sales = CALCULATE ( [Total Sales], 'Date'[IsWeekend] = TRUE () )"}
+{"id": "filt-gen-0584", "category": "filter_context", "difficulty": "easy", "dax": "Weekday Sales = CALCULATE ( [Total Sales], 'Date'[IsWeekend] = FALSE () )"}
+{"id": "filt-gen-0585", "category": "filter_context", "difficulty": "easy", "dax": "Q1 Sales = CALCULATE ( [Total Sales], 'Date'[QuarterNumber] = 1 )"}
+{"id": "filt-gen-0586", "category": "filter_context", "difficulty": "easy", "dax": "Q4 Sales = CALCULATE ( [Total Sales], 'Date'[QuarterNumber] = 4 )"}
+{"id": "filt-gen-0587", "category": "filter_context", "difficulty": "easy", "dax": "Premium Product Sales = CALCULATE ( [Total Sales], Product[Tier] = \"Premium\" )"}
+{"id": "filt-gen-0588", "category": "filter_context", "difficulty": "easy", "dax": "Budget Product Sales = CALCULATE ( [Total Sales], Product[Tier] = \"Budget\" )"}
+{"id": "filt-gen-0589", "category": "filter_context", "difficulty": "easy", "dax": "Sales Excl Internal = CALCULATE ( [Total Sales], Sales[OrderType] <> \"Internal\" )"}
+{"id": "filt-gen-0590", "category": "filter_context", "difficulty": "easy", "dax": "Sales Keep Current Category = CALCULATE ( [Total Sales], KEEPFILTERS ( Product[Category] ) )"}
+{"id": "filt-gen-0591", "category": "filter_context", "difficulty": "easy", "dax": "Total Quantity All Products = CALCULATE ( SUM ( Sales[Quantity] ), ALL ( Product ) )"}
+{"id": "filt-gen-0592", "category": "filter_context", "difficulty": "easy", "dax": "Total Quantity All Customers = CALCULATE ( SUM ( Sales[Quantity] ), ALL ( Customer ) )"}
+{"id": "filt-gen-0593", "category": "filter_context", "difficulty": "easy", "dax": "Subcategory Share = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Subcategory] ) ) )"}
+{"id": "filt-gen-0594", "category": "filter_context", "difficulty": "easy", "dax": "Region Share = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLEXCEPT ( Geography, Geography[Region] ) ) )"}
+{"id": "filt-gen-0595", "category": "filter_context", "difficulty": "easy", "dax": "Country Share = DIVIDE ( [Total Sales], CALCULATE ( [Total Sales], ALLEXCEPT ( Geography, Geography[Country] ) ) )"}
+{"id": "filt-gen-0596", "category": "filter_context", "difficulty": "easy", "dax": "Sales Excl Wholesale = CALCULATE ( [Total Sales], Sales[Channel] <> \"Wholesale\" )"}
+{"id": "filt-gen-0597", "category": "filter_context", "difficulty": "easy", "dax": "Male Customer Sales = CALCULATE ( [Total Sales], Customer[Gender] = \"Male\" )"}
+{"id": "filt-gen-0598", "category": "filter_context", "difficulty": "easy", "dax": "Female Customer Sales = CALCULATE ( [Total Sales], Customer[Gender] = \"Female\" )"}
+{"id": "filt-gen-0599", "category": "filter_context", "difficulty": "easy", "dax": "Sales Keep Customer Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Customer[CustomerType] = \"Premium\" ) )"}
+{"id": "filt-gen-0600", "category": "filter_context", "difficulty": "easy", "dax": "Sales Keep Date Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( 'Date'[CalendarYear] ) )"}
+{"id": "filt-gen-0601", "category": "filter_context", "difficulty": "easy", "dax": "Senior Customer Sales = CALCULATE ( [Total Sales], Customer[AgeGroup] = \"Senior\" )"}
+{"id": "filt-gen-0602", "category": "filter_context", "difficulty": "easy", "dax": "Sales Excluding Refunds = CALCULATE ( [Total Sales], Sales[TransactionType] <> \"Refund\" )"}
+{"id": "filt-gen-0603", "category": "filter_context", "difficulty": "easy", "dax": "In Stock Sales = CALCULATE ( [Total Sales], Product[InStock] = TRUE () )"}
+{"id": "filt-gen-0604", "category": "filter_context", "difficulty": "easy", "dax": "Sales North Region = CALCULATE ( [Total Sales], Geography[Region] = \"North\" )"}
+{"id": "filt-gen-0605", "category": "filter_context", "difficulty": "easy", "dax": "Sales South Region = CALCULATE ( [Total Sales], Geography[Region] = \"South\" )"}
+{"id": "filt-gen-0606", "category": "filter_context", "difficulty": "easy", "dax": "Loyalty Member Sales = CALCULATE ( [Total Sales], Customer[LoyaltyMember] = TRUE () )"}
+{"id": "filt-gen-0607", "category": "filter_context", "difficulty": "medium", "dax": "Retail Channel Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Retail\" )"}
+{"id": "filt-gen-0608", "category": "filter_context", "difficulty": "medium", "dax": "Active Customer Sales = CALCULATE ( [Total Sales], Customer[Status] = \"Active\" )"}
+{"id": "filt-gen-0609", "category": "filter_context", "difficulty": "medium", "dax": "Premium Tier Revenue = CALCULATE ( [Total Sales], Product[Tier] = \"Premium\" )"}
+{"id": "filt-gen-0610", "category": "filter_context", "difficulty": "medium", "dax": "Completed Orders Count = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Completed\" )"}
+{"id": "filt-gen-0611", "category": "filter_context", "difficulty": "medium", "dax": "Sales Excluding Discounted = CALCULATE ( [Total Sales], Sales[Discount] = 0 )"}
+{"id": "filt-gen-0612", "category": "filter_context", "difficulty": "medium", "dax": "Electronics Category Sales = CALCULATE ( [Total Sales], Product[Category] = \"Electronics\" )"}
+{"id": "filt-gen-0613", "category": "filter_context", "difficulty": "medium", "dax": "Sales Keep Region Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Geography[Region] = \"North\" ) )"}
+{"id": "filt-gen-0614", "category": "filter_context", "difficulty": "medium", "dax": "Wholesale Channel Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[Channel] = \"Wholesale\" )"}
+{"id": "filt-gen-0615", "category": "filter_context", "difficulty": "medium", "dax": "High Value Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderAmount] > 1000 )"}
+{"id": "filt-gen-0616", "category": "filter_context", "difficulty": "medium", "dax": "Sales Except Country = CALCULATE ( [Total Sales], ALLEXCEPT ( Geography, Geography[Country] ) )"}
+{"id": "filt-gen-0617", "category": "filter_context", "difficulty": "medium", "dax": "West Region Sales = CALCULATE ( [Total Sales], Geography[Region] = \"West\" )"}
+{"id": "filt-gen-0618", "category": "filter_context", "difficulty": "medium", "dax": "Clothing Category Sales = CALCULATE ( [Total Sales], Product[Category] = \"Clothing\" )"}
+{"id": "filt-gen-0619", "category": "filter_context", "difficulty": "medium", "dax": "Sales Keep Product Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Product[Category] = \"Electronics\" ) )"}
+{"id": "filt-gen-0620", "category": "filter_context", "difficulty": "medium", "dax": "Corporate Customer Sales = CALCULATE ( [Total Sales], Customer[CustomerType] = \"Corporate\" )"}
+{"id": "filt-gen-0621", "category": "filter_context", "difficulty": "medium", "dax": "Sales Except Customer Segment = CALCULATE ( [Total Sales], ALLEXCEPT ( Customer, Customer[Segment] ) )"}
+{"id": "filt-gen-0622", "category": "filter_context", "difficulty": "medium", "dax": "Refunded Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Refunded\" )"}
+{"id": "filt-gen-0623", "category": "filter_context", "difficulty": "medium", "dax": "Sales Keep Channel Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Sales[Channel] = \"Online\" ) )"}
+{"id": "filt-gen-0624", "category": "filter_context", "difficulty": "medium", "dax": "Standard Tier Sales = CALCULATE ( [Total Sales], Product[Tier] = \"Standard\" )"}
+{"id": "filt-gen-0625", "category": "filter_context", "difficulty": "medium", "dax": "North Region Sales = CALCULATE ( [Total Sales], Geography[Region] = \"North\" )"}
+{"id": "filt-gen-0626", "category": "filter_context", "difficulty": "medium", "dax": "Sales All Channels = CALCULATE ( [Total Sales], ALL ( Sales[Channel] ) )"}
+{"id": "filt-gen-0627", "category": "filter_context", "difficulty": "medium", "dax": "Direct Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Direct\" )"}
+{"id": "filt-gen-0628", "category": "filter_context", "difficulty": "medium", "dax": "Repeat Customer Sales = CALCULATE ( [Total Sales], Customer[IsRepeat] = TRUE () )"}
+{"id": "filt-gen-0629", "category": "filter_context", "difficulty": "medium", "dax": "Sales Except Product Category = CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Category] ) )"}
+{"id": "filt-gen-0630", "category": "filter_context", "difficulty": "medium", "dax": "In Store Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"In-Store\" )"}
+{"id": "filt-gen-0631", "category": "filter_context", "difficulty": "medium", "dax": "Q2 Sales = CALCULATE ( [Total Sales], 'Date'[QuarterNumber] = 2 )"}
+{"id": "filt-gen-0632", "category": "filter_context", "difficulty": "medium", "dax": "Shipped Orders = CALCULATE ( COUNTROWS ( Sales ), Sales[OrderStatus] = \"Shipped\" )"}
+{"id": "filt-gen-0633", "category": "filter_context", "difficulty": "medium", "dax": "Sales Except Region = CALCULATE ( [Total Sales], ALLEXCEPT ( Geography, Geography[Region] ) )"}
+{"id": "filt-gen-0634", "category": "filter_context", "difficulty": "medium", "dax": "Food Category Sales = CALCULATE ( [Total Sales], Product[Category] = \"Food\" )"}
+{"id": "filt-gen-0635", "category": "filter_context", "difficulty": "medium", "dax": "Sales Keep Loyalty Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Customer[LoyaltyMember] = TRUE () ) )"}
+{"id": "filt-gen-0636", "category": "filter_context", "difficulty": "medium", "dax": "East Region Sales = CALCULATE ( [Total Sales], Geography[Region] = \"East\" )"}
+{"id": "filt-gen-0637", "category": "filter_context", "difficulty": "medium", "dax": "Partner Channel Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Partner\" )"}
+{"id": "filt-gen-0638", "category": "filter_context", "difficulty": "medium", "dax": "Q3 Sales = CALCULATE ( [Total Sales], 'Date'[QuarterNumber] = 3 )"}
+{"id": "filt-gen-0639", "category": "filter_context", "difficulty": "medium", "dax": "Sales Except Date Year = CALCULATE ( [Total Sales], ALLEXCEPT ( 'Date', 'Date'[Year] ) )"}
+{"id": "filt-gen-0640", "category": "filter_context", "difficulty": "medium", "dax": "Inactive Customer Sales = CALCULATE ( [Total Sales], Customer[Status] = \"Inactive\" )"}
+{"id": "filt-gen-0641", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Cancelled = CALCULATE ( [Total Sales], Sales[OrderStatus] <> \"Cancelled\" )"}
+{"id": "filt-gen-0642", "category": "filter_context", "difficulty": "hard", "dax": "New Customer Sales = CALCULATE ( [Total Sales], Customer[CustomerSegment] = \"New\" )"}
+{"id": "filt-gen-0643", "category": "filter_context", "difficulty": "hard", "dax": "Sales Keep Date Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( 'Date'[CalendarYear] = 2023 ) )"}
+{"id": "filt-gen-0644", "category": "filter_context", "difficulty": "hard", "dax": "Sales All Products = CALCULATE ( [Total Sales], ALL ( Product ) )"}
+{"id": "filt-gen-0645", "category": "filter_context", "difficulty": "hard", "dax": "High Margin Sales = CALCULATE ( [Total Sales], Product[GrossMarginPct] > 0.4 )"}
+{"id": "filt-gen-0646", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Promotions = CALCULATE ( [Total Sales], Sales[IsPromotion] = FALSE () )"}
+{"id": "filt-gen-0647", "category": "filter_context", "difficulty": "hard", "dax": "Domestic Sales = CALCULATE ( [Total Sales], Geography[Region] = \"Domestic\" )"}
+{"id": "filt-gen-0648", "category": "filter_context", "difficulty": "hard", "dax": "Sales Except Date Year = CALCULATE ( [Total Sales], ALLEXCEPT ( 'Date', 'Date'[CalendarYear] ) )"}
+{"id": "filt-gen-0649", "category": "filter_context", "difficulty": "hard", "dax": "VIP Customer Sales = CALCULATE ( [Total Sales], Customer[LoyaltyTier] = \"VIP\" )"}
+{"id": "filt-gen-0650", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Samples = CALCULATE ( [Total Sales], Sales[OrderType] <> \"Sample\" )"}
+{"id": "filt-gen-0651", "category": "filter_context", "difficulty": "hard", "dax": "Large Order Sales = CALCULATE ( [Total Sales], Sales[Quantity] >= 50 )"}
+{"id": "filt-gen-0652", "category": "filter_context", "difficulty": "hard", "dax": "Sales Except Customer Region = CALCULATE ( [Total Sales], ALLEXCEPT ( Customer, Customer[Region] ) )"}
+{"id": "filt-gen-0653", "category": "filter_context", "difficulty": "hard", "dax": "Online B2C Sales = CALCULATE ( [Total Sales], Sales[Channel] = \"Online\", Customer[CustomerType] = \"Consumer\" )"}
+{"id": "filt-gen-0654", "category": "filter_context", "difficulty": "hard", "dax": "Sales With Full Price = CALCULATE ( [Total Sales], Sales[DiscountPct] = 0 )"}
+{"id": "filt-gen-0655", "category": "filter_context", "difficulty": "hard", "dax": "Sales Except Product Subcategory = CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Subcategory] ) )"}
+{"id": "filt-gen-0656", "category": "filter_context", "difficulty": "hard", "dax": "Exported Sales = CALCULATE ( [Total Sales], Geography[SalesTerritory] = \"Export\" )"}
+{"id": "filt-gen-0657", "category": "filter_context", "difficulty": "hard", "dax": "Sales Keep Customer Type Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Customer[CustomerType] = \"Corporate\" ) )"}
+{"id": "filt-gen-0658", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Draft Orders = CALCULATE ( [Total Sales], Sales[OrderStatus] <> \"Draft\" )"}
+{"id": "filt-gen-0659", "category": "filter_context", "difficulty": "hard", "dax": "Silver Tier Sales = CALCULATE ( [Total Sales], Customer[LoyaltyTier] = \"Silver\" )"}
+{"id": "filt-gen-0660", "category": "filter_context", "difficulty": "hard", "dax": "Sales All Geographies = CALCULATE ( [Total Sales], ALL ( Geography[Country], Geography[State], Geography[City] ) )"}
+{"id": "filt-gen-0661", "category": "filter_context", "difficulty": "hard", "dax": "Clearance Product Sales = CALCULATE ( [Total Sales], Product[IsClearance] = TRUE () )"}
+{"id": "filt-gen-0662", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Low Value = CALCULATE ( [Total Sales], Sales[OrderAmount] >= 100 )"}
+{"id": "filt-gen-0663", "category": "filter_context", "difficulty": "hard", "dax": "Sales Except Geography State = CALCULATE ( [Total Sales], ALLEXCEPT ( Geography, Geography[State] ) )"}
+{"id": "filt-gen-0664", "category": "filter_context", "difficulty": "hard", "dax": "Direct Sales Only = CALCULATE ( [Total Sales], Sales[Channel] = \"Direct\" )"}
+{"id": "filt-gen-0665", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Intercompany = CALCULATE ( [Total Sales], Sales[OrderType] <> \"Intercompany\" )"}
+{"id": "filt-gen-0666", "category": "filter_context", "difficulty": "hard", "dax": "Recurring Order Sales = CALCULATE ( [Total Sales], Sales[IsRecurring] = TRUE () )"}
+{"id": "filt-gen-0667", "category": "filter_context", "difficulty": "hard", "dax": "Sales Except Product Brand = CALCULATE ( [Total Sales], ALLEXCEPT ( Product, Product[Brand] ) )"}
+{"id": "filt-gen-0668", "category": "filter_context", "difficulty": "hard", "dax": "Sales Keep Subcategory Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Product[Subcategory] = \"Laptops\" ) )"}
+{"id": "filt-gen-0669", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Test Orders = CALCULATE ( [Total Sales], Sales[IsTestOrder] = FALSE () )"}
+{"id": "filt-gen-0670", "category": "filter_context", "difficulty": "hard", "dax": "Sales All Product Categories = CALCULATE ( [Total Sales], ALL ( Product[Category] ) )"}
+{"id": "filt-gen-0671", "category": "filter_context", "difficulty": "hard", "dax": "High Quantity Sales = CALCULATE ( [Total Sales], Sales[Quantity] > 100 )"}
+{"id": "filt-gen-0672", "category": "filter_context", "difficulty": "hard", "dax": "Sales Keep Geography Filter = CALCULATE ( [Total Sales], KEEPFILTERS ( Geography[Country] = \"United States\" ) )"}
+{"id": "filt-gen-0673", "category": "filter_context", "difficulty": "hard", "dax": "Sales Excl Back Orders = CALCULATE ( [Total Sales], Sales[OrderStatus] <> \"Backorder\" )"}
+{"id": "iter-gen-0674", "category": "iterator", "difficulty": "hard", "dax": "Weighted Avg Selling Price = DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ), SUMX ( Sales, Sales[Quantity] ) )"}
+{"id": "iter-gen-0675", "category": "iterator", "difficulty": "hard", "dax": "Weighted Avg Unit Cost = DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ), SUMX ( Sales, Sales[Quantity] ) )"}
+{"id": "iter-gen-0676", "category": "iterator", "difficulty": "hard", "dax": "Avg Order Revenue = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0677", "category": "iterator", "difficulty": "hard", "dax": "Avg Quantity Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0678", "category": "iterator", "difficulty": "hard", "dax": "Avg Gross Profit Per Line = AVERAGEX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] )"}
+{"id": "iter-gen-0679", "category": "iterator", "difficulty": "hard", "dax": "Max Order Revenue = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0680", "category": "iterator", "difficulty": "hard", "dax": "Max Gross Profit Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0681", "category": "iterator", "difficulty": "hard", "dax": "Min Revenue Per Order = MINX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0682", "category": "iterator", "difficulty": "hard", "dax": "Min Gross Profit Per Customer = MINX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0683", "category": "iterator", "difficulty": "hard", "dax": "Min Order Cost = MINX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0684", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Loss Lines = SUMX ( FILTER ( Sales, Sales[UnitPrice] < Sales[UnitCost] ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0685", "category": "iterator", "difficulty": "hard", "dax": "Total Cost Loss Lines = SUMX ( FILTER ( Sales, Sales[UnitPrice] < Sales[UnitCost] ), Sales[Quantity] * Sales[UnitCost] )"}
+{"id": "iter-gen-0686", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Discounted Lines = SUMX ( FILTER ( Sales, Sales[DiscountPct] > 0 ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0687", "category": "iterator", "difficulty": "hard", "dax": "Total Units Discounted Lines = SUMX ( FILTER ( Sales, Sales[DiscountPct] > 0 ), Sales[Quantity] )"}
+{"id": "iter-gen-0688", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Large Orders = SUMX ( FILTER ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[Quantity] ) ) > 100 ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0689", "category": "iterator", "difficulty": "hard", "dax": "Count Orders Above Avg Revenue = COUNTX ( VALUES ( Sales[OrderNumber] ), IF ( CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) > [Avg Order Revenue], 1, BLANK () ) )"}
+{"id": "iter-gen-0690", "category": "iterator", "difficulty": "hard", "dax": "Avg Margin Pct Per Line = AVERAGEX ( Sales, DIVIDE ( Sales[UnitPrice] - Sales[UnitCost], Sales[UnitPrice] ) )"}
+{"id": "iter-gen-0691", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Premium Products = SUMX ( FILTER ( Sales, RELATED ( Product[UnitPrice] ) > 500 ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0692", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Category A = SUMX ( FILTER ( Sales, RELATED ( Product[Category] ) = \"A\" ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0693", "category": "iterator", "difficulty": "hard", "dax": "Avg Discount Pct Per Order = AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( AVERAGEX ( Sales, Sales[DiscountPct] ) ) )"}
+{"id": "iter-gen-0694", "category": "iterator", "difficulty": "hard", "dax": "Total Net Revenue By Customer = SUMX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * ( 1 - Sales[DiscountPct] ) ) ) )"}
+{"id": "iter-gen-0695", "category": "iterator", "difficulty": "hard", "dax": "Max Discount Pct Per Order = MAXX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( MAX ( Sales[DiscountPct] ) ) )"}
+{"id": "iter-gen-0696", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Single Line Orders = SUMX ( FILTER ( VALUES ( Sales[OrderNumber] ), CALCULATE ( COUNTROWS ( Sales ) ) = 1 ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0697", "category": "iterator", "difficulty": "hard", "dax": "Avg Cost Per Customer = AVERAGEX ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0698", "category": "iterator", "difficulty": "hard", "dax": "Total Margin High Volume Customers = SUMX ( FILTER ( VALUES ( Customer[CustomerKey] ), CALCULATE ( SUM ( Sales[Quantity] ) ) > 500 ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0699", "category": "iterator", "difficulty": "hard", "dax": "Max Margin Per Product = MAXX ( VALUES ( Product[ProductKey] ), CALCULATE ( SUMX ( Sales, ( Sales[UnitPrice] - Sales[UnitCost] ) * Sales[Quantity] ) ) )"}
+{"id": "iter-gen-0700", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Top Customers = SUMX ( TOPN ( 10, VALUES ( Customer[CustomerKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ), DESC ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0701", "category": "iterator", "difficulty": "hard", "dax": "Total Extended Price With Tax = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] * ( 1 + Sales[TaxRate] ) )"}
+{"id": "iter-gen-0702", "category": "iterator", "difficulty": "hard", "dax": "Avg Extended Cost Per Product = AVERAGEX ( VALUES ( Product[ProductKey] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitCost] ) ) )"}
+{"id": "iter-gen-0703", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Negative Discount = SUMX ( FILTER ( Sales, Sales[DiscountPct] < 0 ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0704", "category": "iterator", "difficulty": "hard", "dax": "Count Customers With Multiple Orders = COUNTX ( VALUES ( Customer[CustomerKey] ), IF ( CALCULATE ( DISTINCTCOUNT ( Sales[OrderNumber] ) ) > 1, 1, BLANK () ) )"}
+{"id": "iter-gen-0705", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue New Customers = SUMX ( FILTER ( VALUES ( Customer[CustomerKey] ), CALCULATE ( MIN ( 'Date'[Year] ) ) = MAX ( 'Date'[Year] ) ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0706", "category": "iterator", "difficulty": "hard", "dax": "Avg Order Size By Region = AVERAGEX ( VALUES ( Geography[Region] ), CALCULATE ( AVERAGEX ( VALUES ( Sales[OrderNumber] ), CALCULATE ( SUM ( Sales[Quantity] ) ) ) ) )"}
+{"id": "iter-gen-0707", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Weekend Orders = SUMX ( FILTER ( Sales, RELATED ( 'Date'[IsWeekend] ) = TRUE () ), Sales[Quantity] * Sales[UnitPrice] )"}
+{"id": "iter-gen-0708", "category": "iterator", "difficulty": "hard", "dax": "Max Revenue Per Region = MAXX ( VALUES ( Geography[Region] ), CALCULATE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ) ) )"}
+{"id": "iter-gen-0709", "category": "iterator", "difficulty": "hard", "dax": "Total Cost Single Unit Lines = SUMX ( FILTER ( Sales, Sales[Quantity] = 1 ), Sales[UnitCost] )"}
+{"id": "iter-gen-0710", "category": "iterator", "difficulty": "hard", "dax": "Total Revenue Excluding Discounted = SUMX ( FILTER ( Sales, Sales[DiscountPct] = 0 ), Sales[Quantity] * Sales[UnitPrice] )"}
