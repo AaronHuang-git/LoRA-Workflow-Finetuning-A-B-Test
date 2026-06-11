@@ -1,5 +1,7 @@
 # DAXplain-8B — a finetuned DAX-to-English explainer
 
+**[🤖 Model — daxplain-8b](https://huggingface.co/AaronHuang160/daxplain-8b)** · **[📊 Dataset — dax-explanations](https://huggingface.co/datasets/AaronHuang160/dax-explanations)**
+
 A complete, reproducible **QLoRA finetuning workflow**: distil a dataset with a teacher
 model, curate it, train a LoRA adapter on Llama 3.1 8B, and evaluate it against the base
 model with an LLM-as-judge — shipped as three linked artifacts.
